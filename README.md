@@ -1,2 +1,1 @@
-# ve-tos-dotnet-sdk
-Volcengine TOS .NET SDK
+# Volcengine Object Storage(TOS) .NET SDK

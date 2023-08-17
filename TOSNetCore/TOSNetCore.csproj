@@ -1,0 +1,195 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net20;net35;net40;net45;netstandard2.0;netcoreapp2.0;netcoreapp3.1</TargetFrameworks>
+        <AssemblyName>Volcengine.TOS</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>Volcengine.TOS.SDK</PackageId>
+        <Version>2.1.0</Version>
+        <Authors>volcengine</Authors>
+        <Company>volcengine</Company>
+        <Description>.Net SDK for Volcengine TOS</Description>
+        <Copyright>Copyright (2023) Volcengine Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</Copyright>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageTags>volcengine,tos,c#,.net</PackageTags>
+        <PackageProjectUrl>https://github.com/volcengine/ve-tos-dotnet-sdk</PackageProjectUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="..\TOS\Auth\Signer.cs">
+        <Link>Auth\Signer.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\Constants.cs">
+        <Link>Common\Constants.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\GenericInput.cs">
+        <Link>Common\GenericInput.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\GenericOutput.cs">
+        <Link>Common\GenericOutput.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpAsyncResult.cs">
+        <Link>Common\HttpAsyncResult.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpClient.basic.cs">
+        <Link>Common\HttpClient.basic.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpClient.cs">
+        <Link>Common\HttpClient.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpContext.cs">
+        <Link>Common\HttpContext.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpRequest.cs">
+        <Link>Common\HttpRequest.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\HttpResponse.cs">
+        <Link>Common\HttpResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\SocketTimeoutStream.cs">
+        <Link>Common\SocketTimeoutStream.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Common\Utils.cs">
+        <Link>Common\Utils.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Config\ConfigHolder.cs">
+        <Link>Config\ConfigHolder.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Config\Credential.cs">
+        <Link>Config\Credential.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Config\RegionEndpoint.cs">
+        <Link>Config\RegionEndpoint.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Error\TosClientException.cs">
+        <Link>Error\TosClientException.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Error\TosException.cs">
+        <Link>Error\TosException.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Error\TosServerException.cs">
+        <Link>Error\TosServerException.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\ITosClient.cs">
+        <Link>ITosClient.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\AbortMultipartUpload.cs">
+        <Link>Model\AbortMultipartUpload.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\AppendObject.cs">
+        <Link>Model\AppendObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\Common.cs">
+        <Link>Model\Common.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\CompleteMultipartUpload.cs">
+        <Link>Model\CompleteMultipartUpload.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\CopyObject.cs">
+        <Link>Model\CopyObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\CreateBucket.cs">
+        <Link>Model\CreateBucket.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\CreateMultipartUpload.cs">
+        <Link>Model\CreateMultipartUpload.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\DeleteBucket.cs">
+        <Link>Model\DeleteBucket.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\DeleteMultiObjects.cs">
+        <Link>Model\DeleteMultiObjects.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\DeleteObject.cs">
+        <Link>Model\DeleteObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\Enums.cs">
+        <Link>Model\Enums.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\GetObject.cs">
+        <Link>Model\GetObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\GetObjectACL.cs">
+        <Link>Model\GetObjectACL.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\GetObjectToFile.cs">
+        <Link>Model\GetObjectToFile.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\HeadBucket.cs">
+        <Link>Model\HeadBucket.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\HeadObject.cs">
+        <Link>Model\HeadObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\ListBuckets.cs">
+        <Link>Model\ListBuckets.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\ListMultipartUploads.cs">
+        <Link>Model\ListMultipartUploads.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\ListObjects.cs">
+        <Link>Model\ListObjects.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\ListObjectVersions.cs">
+        <Link>Model\ListObjectVersions.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\ListParts.cs">
+        <Link>Model\ListParts.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\PreSignedURL.cs">
+        <Link>Model\PreSignedURL.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\PutObject.cs">
+        <Link>Model\PutObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\PutObjectACL.cs">
+        <Link>Model\PutObjectACL.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\PutObjectFromFile.cs">
+        <Link>Model\PutObjectFromFile.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\RequestInfo.cs">
+        <Link>Model\RequestInfo.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\SetObjectMeta.cs">
+        <Link>Model\SetObjectMeta.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\UploadPart.cs">
+        <Link>Model\UploadPart.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\UploadPartCopy.cs">
+        <Link>Model\UploadPartCopy.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\UploadPartFromFile.cs">
+        <Link>Model\UploadPartFromFile.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClient.basic.cs">
+        <Link>TosClient.basic.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClient.buckets.cs">
+        <Link>TosClient.buckets.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClient.multipart.cs">
+        <Link>TosClient.multipart.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClient.objects.cs">
+        <Link>TosClient.objects.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClient.presign.cs">
+        <Link>TosClient.presign.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\TosClientBuilder.cs">
+        <Link>TosClientBuilder.cs</Link>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+        <PrivateAssets>build</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+</Project>
