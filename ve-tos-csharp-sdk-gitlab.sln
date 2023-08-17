@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOS", "TOS\TOS.csproj", "{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTOS", "TestTOS\TestTOS.csproj", "{0CC74657-5C78-4C7C-B0BA-809383B5046D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTOSNetCore", "TestTOSNetCore\TestTOSNetCore.csproj", "{42145C7E-A7CD-4175-8C0B-E68E45D47935}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOSNetCore", "TOSNetCore\TOSNetCore.csproj", "{15DC8852-E869-428A-9299-3C880399809A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC74657-5C78-4C7C-B0BA-809383B5046D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC74657-5C78-4C7C-B0BA-809383B5046D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC74657-5C78-4C7C-B0BA-809383B5046D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC74657-5C78-4C7C-B0BA-809383B5046D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42145C7E-A7CD-4175-8C0B-E68E45D47935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42145C7E-A7CD-4175-8C0B-E68E45D47935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42145C7E-A7CD-4175-8C0B-E68E45D47935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42145C7E-A7CD-4175-8C0B-E68E45D47935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DC8852-E869-428A-9299-3C880399809A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DC8852-E869-428A-9299-3C880399809A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DC8852-E869-428A-9299-3C880399809A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DC8852-E869-428A-9299-3C880399809A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
