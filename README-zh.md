@@ -53,8 +53,9 @@
         {
             private static void Main(string[] args)
             {
-                var ak = "*** Provide your access key ***";
-                var sk = "*** Provide your secret key ***";
+                // 从环境变量中获取访问凭证。运行示例代码之前，请确保已设置环境变量 TOS_ACCESS_KEY 和 TOS_SECRET_KEY
+                var ak = Environment.GetEnvironmentVariable("TOS_ACCESS_KEY");
+                var sk = Environment.GetEnvironmentVariable("TOS_SECRET_KEY");
                 // endpoint 若没有指定HTTP协议（HTTP/HTTPS），默认使用 HTTPS
                 var endpoint = "*** Provide your endpoint ***";
                 var region = "*** Provide your region ***";
@@ -79,8 +80,9 @@
         {
             private static void Main(string[] args)
             {
-                var ak = "*** Provide your access key ***";
-                var sk = "*** Provide your secret key ***";
+                // 从环境变量中获取访问凭证。运行示例代码之前，请确保已设置环境变量 TOS_ACCESS_KEY 和 TOS_SECRET_KEY
+                var ak = Environment.GetEnvironmentVariable("TOS_ACCESS_KEY");
+                var sk = Environment.GetEnvironmentVariable("TOS_SECRET_KEY");
                 // endpoint 若没有指定HTTP协议（HTTP/HTTPS），默认使用 HTTPS
                 var endpoint = "*** Provide your endpoint ***";
                 var region = "*** Provide your region ***";
@@ -137,8 +139,9 @@
         {
             private static void Main(string[] args)
             {
-                var ak = "*** Provide your access key ***";
-                var sk = "*** Provide your secret key ***";
+                // 从环境变量中获取访问凭证。运行示例代码之前，请确保已设置环境变量 TOS_ACCESS_KEY 和 TOS_SECRET_KEY
+                var ak = Environment.GetEnvironmentVariable("TOS_ACCESS_KEY");
+                var sk = Environment.GetEnvironmentVariable("TOS_SECRET_KEY");
                 // endpoint 若没有指定HTTP协议（HTTP/HTTPS），默认使用 HTTPS
                 // Bucket 的 Endpoint，以华北2（北京）为例：https://tos-cn-beijing.volces.com
                 var endpoint = "https://tos-cn-beijing.volces.com";
