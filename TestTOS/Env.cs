@@ -10,6 +10,7 @@ namespace TestTOS
         public readonly string SecretKey = Environment.GetEnvironmentVariable("TOS_SECRET_KEY");
         public readonly string Region = Environment.GetEnvironmentVariable("TOS_REGION");
         public readonly string EndPoint = Environment.GetEnvironmentVariable("TOS_ENDPOINT");
+        public readonly string CallbackUrl = Environment.GetEnvironmentVariable("TOS_CALLBACK_URL");
 
         public TosClientBuilder PrepareClientBuilder() 
         {
@@ -21,6 +22,4 @@ namespace TestTOS
             return  PrepareClientBuilder().Build();
         }
     }
-    
-    
 }

@@ -21,7 +21,7 @@ namespace TOS.Common
     internal class Constants
     {
         // http client
-        internal const string Version = "v2.1.0";
+        internal const string Version = "v2.1.2";
         internal const int DefaultConnectionTimeout = 10000;
         internal const int DefaultSocketTimeout = 30000;
         internal const int DefaultMaxConnections = 1024;
@@ -88,6 +88,8 @@ namespace TOS.Common
         internal const string HeaderSSECKey = HeaderPrefix + "server-side-encryption-customer-key";
         internal const string HeaderSSECKeyMD5 = HeaderPrefix + "server-side-encryption-customer-key-MD5";
         internal const string HeaderServerSideEncryption = HeaderPrefix + "server-side-encryption";
+        internal const string HeaderCallback = HeaderPrefix + "callback";
+        internal const string HeaderCallbackVar = HeaderPrefix + "callback-var";
 
         internal const string HeaderCopySourceSSECAlgorithm =
             HeaderPrefix + "copy-source-server-side-encryption-customer-algorithm";
@@ -108,7 +110,7 @@ namespace TOS.Common
         internal const string HeaderHashCrc64ecma = HeaderPrefix + "hash-crc64ecma";
         internal const string HeaderAcl = HeaderPrefix + "acl";
         internal const string HeaderGrantFullControl = HeaderPrefix + "grant-full-control";
-        internal const string HeaderGrantRead = HeaderPrefix + "grant-full-control";
+        internal const string HeaderGrantRead = HeaderPrefix + "grant-read";
         internal const string HeaderGrantReadAcp = HeaderPrefix + "grant-read-acp";
         internal const string HeaderGrantWrite = HeaderPrefix + "grant-write";
         internal const string HeaderGrantWriteAcp = HeaderPrefix + "grant-write-acp";

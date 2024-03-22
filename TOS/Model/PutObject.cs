@@ -78,6 +78,9 @@ namespace TOS.Model
         public string WebsiteRedirectLocation { set; get; }
 
         public StorageClassType? StorageClass { set; get; }
+        
+        public string Callback { set; get; }
+        public string CallbackVar { set; get; }
 
         internal override HttpRequest Trans()
         {
@@ -93,6 +96,16 @@ namespace TOS.Model
                 request.Header[Constants.HeaderContentSHA256] = ContentSHA256;
             }
 
+            if (!string.IsNullOrEmpty(Callback))
+            {
+                request.Header[Constants.HeaderCallback] = Callback;
+            }
+            
+            if (!string.IsNullOrEmpty(CallbackVar))
+            {
+                request.Header[Constants.HeaderCallbackVar] = CallbackVar;
+            }
+            
             Utils.SetHttpBasicHeader(request.Header, this);
             Utils.SetAclHeader(request.Header, this);
             Utils.SetSseHeader(request.Header, this);
@@ -127,6 +140,8 @@ namespace TOS.Model
         public string VersionID { internal set; get; }
 
         public ulong HashCrc64ecma { internal set; get; }
+        
+        public string CallbackResult { internal set; get; }
 
         internal sealed override void Parse(HttpRequest request, HttpResponse response)
         {
@@ -147,6 +162,12 @@ namespace TOS.Model
             if (!string.IsNullOrEmpty(temp))
             {
                 HashCrc64ecma = Convert.ToUInt64(temp);
+            }
+
+            request.Header.TryGetValue(Constants.HeaderCallback, out temp);
+            if (!string.IsNullOrEmpty(temp))
+            {
+                CallbackResult = Utils.GetStreamString(response.Body);
             }
         }
     }

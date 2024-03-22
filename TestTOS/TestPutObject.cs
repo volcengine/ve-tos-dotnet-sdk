@@ -25,7 +25,7 @@ namespace TestTOS
                     Bucket = bucket
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
                 Util.CheckBucketMeta(client, bucket, env.Region, StorageClassType.StorageClassStandard);
 
                 var headObjectInput = new HeadObjectInput
@@ -33,7 +33,7 @@ namespace TestTOS
                     Bucket = bucket,
                     Key = key
                 };
-                
+
                 var ex = Assert.Throws<TosServerException>(() => client.HeadObject(headObjectInput));
                 Assert.AreEqual(404, ex.StatusCode);
                 Assert.AreEqual("unexpected status code: 404", ex.Message);
@@ -47,7 +47,7 @@ namespace TestTOS
                 client.DeleteBucket(deleteBucketInput);
             }
         }
-        
+
         [Test]
         public void TestGetNoneExistentObject()
         {
@@ -63,7 +63,7 @@ namespace TestTOS
                     Bucket = bucket
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
                 Util.CheckBucketMeta(client, bucket, env.Region, StorageClassType.StorageClassStandard);
 
                 var getObjectInput = new GetObjectInput
@@ -71,7 +71,7 @@ namespace TestTOS
                     Bucket = bucket,
                     Key = key
                 };
-                
+
                 var ex = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
                 Assert.AreEqual(404, ex.StatusCode);
                 Assert.AreEqual("NoSuchKey", ex.Code);
@@ -93,7 +93,7 @@ namespace TestTOS
             var client = env.PrepareClient();
             var bucket = Util.GenerateBucketName("put-basic");
             var key = "key123";
-            
+
             try
             {
                 var createBucketInput = new CreateBucketInput
@@ -105,7 +105,7 @@ namespace TestTOS
                 Util.PutRandomObject(client, bucket, key, 4096);
 
                 Util.WaitUntilObjectExist(client, bucket, key);
-                
+
                 var deleteObjectInput = new DeleteObjectInput
                 {
                     Bucket = bucket,
@@ -122,14 +122,16 @@ namespace TestTOS
                 client.DeleteBucket(deleteBucketInput);
             }
         }
-        
-        public void TestPutLargeObject()
+
+        [Test]
+        public void TestPutCallback()
         {
             var env = new TestEnv();
-            var client = env.PrepareClientBuilder().SetSocketTimeout(360*1000).SetConnectionTimeout(360*1000).Build();
-            var bucket = Util.GenerateBucketName("put-basic");
-            var key = "key123";
-            
+            var client = env.PrepareClient();
+            var bucket = Util.GenerateBucketName("put-callback");
+            var key1 = "key1231";
+            var key2 = "key1232";
+
             try
             {
                 var createBucketInput = new CreateBucketInput
@@ -137,10 +139,66 @@ namespace TestTOS
                     Bucket = bucket
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-        
-                Util.PutRandomObject(client, bucket, key, 100*4096*4096);
-                Util.WaitUntilObjectExist(client, bucket, key);
+
+                var invalidOriginInput =
+                    $"{{\"callbackUrl\":\"http://343545.xxxx.com\",\"callbackBody\":\"{{\\\"bucket\\\": ${{bucket}}, \\\"object\\\": ${{object}}, \\\"key1\\\": ${{x:key1}}}}\",\"callbackBodyType\":\"application/json\"}}";
+                var originInput =
+                    $"{{\"callbackUrl\":\"{env.CallbackUrl}\",\"callbackBody\":\"{{\\\"bucket\\\": ${{bucket}}, \\\"object\\\": ${{object}}, \\\"key1\\\": ${{x:key1}}}}\",\"callbackBodyType\":\"application/json\"}}";
+                var originVarInput = "{\"x:key1\" : \"ceshi\"}";
+
+                // 回调失败
+                var exServer = Assert.Throws<TosServerException>(() => Util.PutRandomObjectWithCallback(client, bucket, key1, 4096, invalidOriginInput, originVarInput));
+                Assert.AreEqual(203, exServer.StatusCode);
+                Assert.AreEqual("CallbackFailed", exServer.Code);
+                Util.WaitUntilObjectExist(client, bucket, key1);
                 
+                // 回调成功
+                Util.PutRandomObjectWithCallback(client, bucket, key2, 4096, originInput, originVarInput);
+                Util.WaitUntilObjectExist(client, bucket, key2);
+
+                var deleteObjectInput1 = new DeleteObjectInput
+                {
+                    Bucket = bucket,
+                    Key = key1
+                };
+                client.DeleteObject(deleteObjectInput1);
+                var deleteObjectInput2 = new DeleteObjectInput
+                {
+                    Bucket = bucket,
+                    Key = key2
+                };
+                client.DeleteObject(deleteObjectInput2);
+            }
+            finally
+            {
+                var deleteBucketInput = new DeleteBucketInput
+                {
+                    Bucket = bucket
+                };
+                client.DeleteBucket(deleteBucketInput);
+            }
+        }
+
+
+        public void TestPutLargeObject()
+        {
+            var env = new TestEnv();
+            var client = env.PrepareClientBuilder().SetSocketTimeout(360 * 1000).SetConnectionTimeout(360 * 1000)
+                .Build();
+            var bucket = Util.GenerateBucketName("put-basic");
+            var key = "key123";
+
+            try
+            {
+                var createBucketInput = new CreateBucketInput
+                {
+                    Bucket = bucket
+                };
+                Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
+
+                Util.PutRandomObject(client, bucket, key, 100 * 4096 * 4096);
+                Util.WaitUntilObjectExist(client, bucket, key);
+
                 var deleteObjectInput = new DeleteObjectInput
                 {
                     Bucket = bucket,
@@ -162,7 +220,8 @@ namespace TestTOS
         public void TestNormal()
         {
             var env = new TestEnv();
-            var client = env.PrepareClientBuilder().SetSocketTimeout(360*1000).SetConnectionTimeout(360*1000).Build();
+            var client = env.PrepareClientBuilder().SetSocketTimeout(360 * 1000).SetConnectionTimeout(360 * 1000)
+                .Build();
             var bucket = Util.GenerateBucketName("put-basic");
             var key1 = Util.GenerateObjectName("normal-1");
             var key2 = Util.GenerateObjectName("normal-2");
@@ -183,7 +242,7 @@ namespace TestTOS
                 Bucket = bucket
             };
             Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
             // 上传各种有效字符的对象
             foreach (var k in keys)
             {
@@ -191,11 +250,11 @@ namespace TestTOS
                 Util.GetObjectAndCheckResponse(client, bucket, k, data);
                 Util.DeleteObjectAndCheckResponse(client, bucket, k);
             }
-            
+
             // 必选参数上传对象
             Util.PutObjectFromStringAndCheckResponse(client, bucket, key1, data);
             Util.GetObjectAndCheckResponse(client, bucket, key1, data);
-            
+
             // 测试流式上传
             var getObjectInput = new GetObjectInput()
             {
@@ -207,7 +266,7 @@ namespace TestTOS
             Util.PutObjectFromStreamAndCheckResponse(client, bucket, key2, getObjectOutput.Content);
             getObjectOutput.Content.Close();
             Util.DeleteObjectAndCheckResponse(client, bucket, key2);
-            
+
             // 所有参数上传对象
             var putObjectInput = new PutObjectInput()
             {
@@ -218,7 +277,7 @@ namespace TestTOS
                 ACL = ACLType.ACLPublicRead,
                 ContentDisposition = "test-disposition",
                 Expires = DateTime.Now.AddHours(1),
-                Meta = new Dictionary<string, string>(){{"aaa","bbb"}, {"中文键","中文值"}},
+                Meta = new Dictionary<string, string>() { { "aaa", "bbb" }, { "中文键", "中文值" } },
                 ContentEncoding = "test-encoding",
                 ContentLanguage = "test-language",
                 ContentType = "text/plain",
@@ -226,10 +285,10 @@ namespace TestTOS
                 ContentMD5 = md5
             };
             var putObjectOutput = client.PutObject(putObjectInput);
-            Assert.Greater(putObjectOutput.RequestID.Length, 0);                
-            Assert.Greater(putObjectOutput.ETag.Length, 0);                
+            Assert.Greater(putObjectOutput.RequestID.Length, 0);
+            Assert.Greater(putObjectOutput.ETag.Length, 0);
             Assert.AreEqual(200, putObjectOutput.StatusCode);
-            
+
             getObjectOutput = Util.GetObjectAndCheckResponse(client, bucket, key1, data);
             Assert.AreEqual(data.Length, getObjectOutput.ContentLength);
             Assert.AreEqual(putObjectInput.StorageClass, getObjectOutput.StorageClass);
@@ -242,12 +301,12 @@ namespace TestTOS
             Assert.AreEqual(putObjectInput.Meta.Count, getObjectOutput.Meta.Count);
             Assert.AreEqual("bbb", getObjectOutput.Meta["x-tos-meta-aaa"]);
             Assert.AreEqual("中文值", getObjectOutput.Meta["x-tos-meta-中文键"]);
-            
+
             // 上传大小为 0 的对象
             Util.PutObjectFromStreamAndCheckResponse(client, bucket, key1, null);
             Util.GetObjectAndCheckResponse(client, bucket, key1, "");
             Util.DeleteObjectAndCheckResponse(client, bucket, key1);
-            
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
@@ -270,7 +329,7 @@ namespace TestTOS
                 Bucket = bucket
             };
             Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
             var putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
@@ -279,7 +338,7 @@ namespace TestTOS
             };
             var exClient = Assert.Throws<TosClientException>(() => client.PutObject(putObjectInput));
             Assert.AreEqual("invalid object name", exClient.Message);
-            
+
             putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
@@ -289,7 +348,7 @@ namespace TestTOS
             var exServer = Assert.Throws<TosServerException>(() => client.PutObject(putObjectInput));
             Assert.AreEqual(400, exServer.StatusCode);
             Assert.AreEqual("KeyTooLong", exServer.Code);
-            
+
             putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
@@ -299,7 +358,7 @@ namespace TestTOS
             };
             exClient = Assert.Throws<TosClientException>(() => client.PutObject(putObjectInput));
             Assert.AreEqual("invalid encryption-decryption algorithm", exClient.Message);
-            
+
             putObjectInput = new PutObjectInput()
             {
                 Bucket = "no-exist-bkt",
@@ -309,27 +368,27 @@ namespace TestTOS
             exServer = Assert.Throws<TosServerException>(() => client.PutObject(putObjectInput));
             Assert.AreEqual(404, exServer.StatusCode);
             Assert.AreEqual("NoSuchBucket", exServer.Code);
-            
+
             var getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
-                Key = key+"-no-exist-obj",
+                Key = key + "-no-exist-obj",
             };
             exServer = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(404, exServer.StatusCode);
             Assert.AreEqual("NoSuchKey", exServer.Code);
-          
+
             getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
-                Key = key+"-no-exist-obj",
+                Key = key + "-no-exist-obj",
                 Range = "",
                 VersionID = "123"
             };
             exServer = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(400, exServer.StatusCode);
             Assert.AreEqual("InvalidArgument", exServer.Code);
-            
+
             putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
@@ -340,7 +399,7 @@ namespace TestTOS
             exServer = Assert.Throws<TosServerException>(() => client.PutObject(putObjectInput));
             Assert.AreEqual(400, exServer.StatusCode);
             Assert.AreEqual("InvalidDigest", exServer.Code);
-            
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
@@ -358,7 +417,7 @@ namespace TestTOS
             var key = Util.GenerateObjectName("ssec");
             var data = "hello world";
             var md5 = Util.CalculateMd5(data);
-            
+
             var createBucketInput = new CreateBucketInput
             {
                 Bucket = bucket
@@ -399,14 +458,14 @@ namespace TestTOS
             var ex = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(400, ex.StatusCode);
             Assert.AreEqual("InvalidRequest", ex.Code);
-            
+
             var deleteObjectInput = new DeleteObjectInput()
             {
                 Bucket = bucket,
                 Key = key,
             };
             client.DeleteObject(deleteObjectInput);
-            
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
@@ -423,7 +482,7 @@ namespace TestTOS
             var bucket = Util.GenerateBucketName("put-basic");
             var key = Util.GenerateObjectName("cas");
             var data = "hello world";
-            
+
             var createBucketInput = new CreateBucketInput
             {
                 Bucket = bucket
@@ -434,7 +493,7 @@ namespace TestTOS
             var etag = putObjectOutput.ETag;
             var noneMatchEtag = Util.CalculateMd5(putObjectOutput.ETag);
             var nowTime = DateTime.Now;
-            
+
             var getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
@@ -444,13 +503,13 @@ namespace TestTOS
                 IfModifiedSince = nowTime.AddHours(-1),
                 IfUnmodifiedSince = nowTime.AddHours(1),
             };
-            
+
             var getObjectOutput = client.GetObject(getObjectInput);
             Assert.Greater(getObjectOutput.RequestID.Length, 0);
             Assert.AreEqual(data, Util.ReadStreamAsString(getObjectOutput.Content));
             getObjectOutput.Content.Close();
             var lastModified = getObjectOutput.LastModified;
-            
+
             getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
@@ -469,7 +528,7 @@ namespace TestTOS
             };
             ex = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(304, ex.StatusCode);
-            
+
             getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
@@ -479,7 +538,7 @@ namespace TestTOS
             ex = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(412, ex.StatusCode);
             Assert.AreEqual("PreconditionFailed", ex.Code);
-            
+
             getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
@@ -488,14 +547,14 @@ namespace TestTOS
             };
             ex = Assert.Throws<TosServerException>(() => client.GetObject(getObjectInput));
             Assert.AreEqual(304, ex.StatusCode);
-            
+
             var deleteObjectInput = new DeleteObjectInput()
             {
                 Bucket = bucket,
                 Key = key,
             };
             client.DeleteObject(deleteObjectInput);
-            
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
@@ -540,7 +599,7 @@ namespace TestTOS
             getObjectOutput = client.GetObject(getObjectInput);
             Assert.AreEqual(data.Substring(3, 4 - 3 + 1), Util.ReadStreamAsString(getObjectOutput.Content));
             getObjectOutput.Content.Close();
-            
+
             var deleteObjectInput = new DeleteObjectInput()
             {
                 Bucket = bucket,
@@ -572,7 +631,7 @@ namespace TestTOS
             };
             Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
             Util.PutObjectFromStringAndCheckResponse(client, bucket, key, data);
-            
+
             var getObjectInput = new GetObjectInput()
             {
                 Bucket = bucket,
@@ -587,14 +646,14 @@ namespace TestTOS
             var getObjectOutput = client.GetObject(getObjectInput);
             Assert.AreEqual(data, Util.ReadStreamAsString(getObjectOutput.Content));
             getObjectOutput.Content.Close();
-            
-            Assert.AreEqual(getObjectInput.ResponseContentType,getObjectOutput.ContentType);
-            Assert.AreEqual(getObjectInput.ResponseCacheControl,getObjectOutput.CacheControl);
-            Assert.AreEqual(getObjectInput.ResponseContentDisposition,getObjectOutput.ContentDisposition);
-            Assert.AreEqual(getObjectInput.ResponseContentEncoding,getObjectOutput.ContentEncoding);
-            Assert.AreEqual(getObjectInput.ResponseContentLanguage,getObjectOutput.ContentLanguage);
-            Assert.AreEqual(getObjectInput.ResponseExpires.ToString(),getObjectOutput.Expires.ToString());
-            
+
+            Assert.AreEqual(getObjectInput.ResponseContentType, getObjectOutput.ContentType);
+            Assert.AreEqual(getObjectInput.ResponseCacheControl, getObjectOutput.CacheControl);
+            Assert.AreEqual(getObjectInput.ResponseContentDisposition, getObjectOutput.ContentDisposition);
+            Assert.AreEqual(getObjectInput.ResponseContentEncoding, getObjectOutput.ContentEncoding);
+            Assert.AreEqual(getObjectInput.ResponseContentLanguage, getObjectOutput.ContentLanguage);
+            Assert.AreEqual(getObjectInput.ResponseExpires.ToString(), getObjectOutput.Expires.ToString());
+
             var deleteObjectInput = new DeleteObjectInput()
             {
                 Bucket = bucket,
