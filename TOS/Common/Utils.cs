@@ -208,6 +208,16 @@ namespace TOS.Common
             }
         }
 
+        internal static string GetStreamString(Stream src)
+        {
+            using (StreamReader reader = new StreamReader(src, Encoding.UTF8))
+            {
+                string result = reader.ReadToEnd();
+
+                return result;
+            } 
+        }
+        
         internal static JObject TryParseJson(Stream src)
         {
             byte[] b = ReadAll(src);

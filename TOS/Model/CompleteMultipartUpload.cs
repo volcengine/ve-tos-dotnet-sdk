@@ -34,6 +34,9 @@ namespace TOS.Model
 
         public UploadedPart[] Parts { set; get; }
 
+        public string Callback  { set; get; }
+        public string CallbackVar  { set; get; }
+
         internal sealed override HttpRequest Trans()
         {
             HttpRequest request = base.Trans();
@@ -68,6 +71,16 @@ namespace TOS.Model
             {
                 throw new TosClientException("empty grants for complete multipart upload");
             }
+            
+            if (!string.IsNullOrEmpty(Callback))
+            {
+                request.Header[Constants.HeaderCallback] = Callback;
+            }
+            
+            if (!string.IsNullOrEmpty(CallbackVar))
+            {
+                request.Header[Constants.HeaderCallbackVar] = CallbackVar;
+            }
 
             JObject json = new JObject();
             json["Parts"] = parts;
@@ -93,14 +106,10 @@ namespace TOS.Model
 
         public ulong HashCrc64ecma { internal set; get; }
 
+        public string CallbackResult { internal set; get; }
+        
         internal override void Parse(HttpRequest request, HttpResponse response)
         {
-            JObject json = Utils.ParseJson(response.Body);
-            Bucket = json["Bucket"]?.Value<string>();
-            Key = json["Key"]?.Value<string>();
-            ETag = json["ETag"]?.Value<string>();
-            Location = json["Location"]?.Value<string>();
-
             string temp;
             response.Header.TryGetValue(Constants.HeaderVersionID, out temp);
             VersionID = temp;
@@ -109,6 +118,33 @@ namespace TOS.Model
             if (!string.IsNullOrEmpty(temp))
             {
                 HashCrc64ecma = Convert.ToUInt64(temp);
+            }
+            
+            request.Header.TryGetValue(Constants.HeaderCallback, out temp);
+            if (!string.IsNullOrEmpty(temp))
+            {
+                CallbackResult = Utils.GetStreamString(response.Body);
+                
+                string tempHeader;
+                response.Header.TryGetValue(Constants.HeaderETag, out tempHeader);
+                if (!string.IsNullOrEmpty(tempHeader))
+                {
+                    ETag = tempHeader;
+                }
+                
+                response.Header.TryGetValue(Constants.HeaderLocation, out tempHeader);
+                if (!string.IsNullOrEmpty(tempHeader))
+                {
+                    Location = tempHeader;
+                }
+            }
+            else
+            {
+                JObject json = Utils.ParseJson(response.Body);
+                Bucket = json["Bucket"]?.Value<string>();
+                Key = json["Key"]?.Value<string>();
+                ETag = json["ETag"]?.Value<string>();
+                Location = json["Location"]?.Value<string>();  
             }
         }
     }

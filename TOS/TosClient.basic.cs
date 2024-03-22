@@ -54,7 +54,7 @@ namespace TOS
                 }
 
                 response = this._httpClient.DoRequest(request);
-                RequestInfo requestInfo = this.CheckResponse(response);
+                RequestInfo requestInfo = this.CheckResponse(response, output.GetType());
                 output.Parse(request, response, requestInfo);
                 return output;
             }
@@ -73,7 +73,7 @@ namespace TOS
             }
         }
 
-        private RequestInfo CheckResponse(HttpResponse response)
+        private RequestInfo CheckResponse(HttpResponse response, Type outputType)
         {
             RequestInfo requestInfo = new RequestInfo
             {
@@ -87,7 +87,7 @@ namespace TOS
 
             response.Header.TryGetValue(Constants.HeaderID2, out temp);
             requestInfo.ID2 = temp;
-            if (response.StatusCode >= 300)
+            if (response.StatusCode >= 300 || (response.StatusCode == 203 && (outputType == typeof(PutObjectOutput) || outputType == typeof(CompleteMultipartUploadOutput))))
             {
                 JObject json = Utils.TryParseJson(response.Body);
                 if (json != null)
