@@ -83,6 +83,7 @@
         <Compile Include="Model\ListParts.cs" />
         <Compile Include="Model\PreSignedURL.cs" />
         <Compile Include="Model\PutObject.cs" />
+        <Compile Include="Model\RestoreObject.cs" />
         <Compile Include="Model\PutObjectACL.cs" />
         <Compile Include="Model\PutObjectFromFile.cs" />
         <Compile Include="Model\RequestInfo.cs" />

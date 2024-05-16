@@ -51,6 +51,8 @@ namespace TOS
 
         PutObjectOutput PutObject(PutObjectInput input);
 
+        RestoreObjectOutput RestoreObject(RestoreObjectInput input);
+        
         PutObjectFromFileOutput PutObjectFromFile(PutObjectFromFileInput input);
 
         PutObjectACLOutput PutObjectACL(PutObjectACLInput input);

@@ -46,6 +46,12 @@ namespace TOS.Common
         {
             return UrlEncode(uriToEncode, string.Empty);
         }
+        
+        internal static string UrlEncodeChinese(string uriToEncode)
+        {
+            Regex regex = new Regex(@"[\u4e00-\u9fa5]");
+            return regex.Replace(uriToEncode, m => UrlEncode(m.Value, string.Empty));
+        }
 
         internal static string UrlEncode(string uriToEncode, string safe)
         {
@@ -255,7 +261,7 @@ namespace TOS.Common
                 header[Constants.HeaderContentEncoding] = input.ContentEncoding;
 
             if (!string.IsNullOrEmpty(input.ContentDisposition))
-                header[Constants.HeaderContentDisposition] = UrlEncode(input.ContentDisposition);
+                header[Constants.HeaderContentDisposition] = UrlEncodeChinese(input.ContentDisposition);
 
             if (input.Expires.HasValue)
                 header[Constants.HeaderExpires] =
