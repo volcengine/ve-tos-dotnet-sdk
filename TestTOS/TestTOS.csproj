@@ -60,6 +60,7 @@
         <Compile Include="TestPutObject.cs" />
         <Compile Include="TestPutObjectAcl.cs" />
         <Compile Include="TestPutObjectFromFile.cs" />
+        <Compile Include="TestRestoreObject.cs" />
         <Compile Include="TestSetObjectMeta.cs" />
         <Compile Include="TestUploadFile.cs" />
         <Compile Include="Util.cs" />

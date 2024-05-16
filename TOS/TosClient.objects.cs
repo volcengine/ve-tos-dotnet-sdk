@@ -74,6 +74,11 @@ namespace TOS
         {
             return this.DoRequest<PutObjectInput, PutObjectOutput>(input);
         }
+        
+        public RestoreObjectOutput RestoreObject(RestoreObjectInput input)
+        {
+            return this.DoRequest<RestoreObjectInput, RestoreObjectOutput>(input);
+        }
 
         public PutObjectFromFileOutput PutObjectFromFile(PutObjectFromFileInput input)
         {

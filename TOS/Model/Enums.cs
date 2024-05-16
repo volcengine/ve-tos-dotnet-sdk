@@ -54,8 +54,16 @@ namespace TOS.Model
         [StringValue("STANDARD")] StorageClassStandard,
 
         [StringValue("IA")] StorageClassIa,
+        
+        [StringValue("INTELLIGENT_TIERING")] StorageClassIntelligentTiering,
 
         [StringValue("ARCHIVE_FR")] StorageClassArchiveFr,
+        
+        [StringValue("ARCHIVE")] StorageClassArchive,
+
+        [StringValue("COLD_ARCHIVE")] StorageClassColdArchive,
+
+        [StringValue("DEEP_COLD_ARCHIVE")] StorageClassDeepColdArchive,
     }
 
     public enum AzRedundancyType
@@ -90,6 +98,13 @@ namespace TOS.Model
     {
         [StringValue("AllUsers")] CannedAllUsers,
         [StringValue("AuthenticatedUsers")] CannedAuthenticatedUsers
+    }
+    
+    public enum TierType
+    {
+        [StringValue("Standard")] Standard,
+        [StringValue("Expedited")] Expedited,
+        [StringValue("Bulk")] Bulk
     }
 
     internal class StringValueAttribute : Attribute

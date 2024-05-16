@@ -80,14 +80,15 @@ namespace TestTOS
             }
         }
 
-        public static void PutRandomObject(ITosClient client, string bucket, string key, int size)
+        public static void PutRandomObject(ITosClient client, string bucket, string key, int size, StorageClassType storageClass)
         {
             var value = GenerateRandomStr(size);
             var putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
                 Key = key,
-                Content = ConvertStringToStream(value)
+                Content = ConvertStringToStream(value),
+                StorageClass = storageClass,
             };
             var putObjectOutput = client.PutObject(putObjectInput);
             Assert.AreEqual(200, putObjectOutput.StatusCode);

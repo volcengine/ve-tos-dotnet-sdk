@@ -68,12 +68,12 @@ namespace TestTOS
                 {
                     var filePath = filePaths[i];
                     var realFilePath = realFilePaths[i];
-                    
                     var input = new GetObjectToFileInput()
                     {
                         Bucket = bucket,
                         Key = key,
-                        FilePath = filePath
+                        FilePath = filePath,
+                        ResponseContentDisposition = "attachment; filename=中文%&!@#$%^&*()202411.2029.txt"
                     };
                     
                     if (File.Exists(filePath))
@@ -84,6 +84,7 @@ namespace TestTOS
                     var output = client.GetObjectToFile(input);
                     Assert.Greater(output.RequestID.Length, 0);
                     Assert.Greater(output.ETag.Length, 0);
+                    Assert.AreEqual(input.ResponseContentDisposition, output.ContentDisposition);
                     Assert.AreEqual(sourceFileMd5, Util.CalculateMd5FromFile(realFilePath));
                 }
 

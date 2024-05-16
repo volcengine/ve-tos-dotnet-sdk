@@ -102,7 +102,7 @@ namespace TestTOS
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
 
-                Util.PutRandomObject(client, bucket, key, 4096);
+                Util.PutRandomObject(client, bucket, key, 4096, StorageClassType.StorageClassStandard);
 
                 Util.WaitUntilObjectExist(client, bucket, key);
 
@@ -196,7 +196,7 @@ namespace TestTOS
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
 
-                Util.PutRandomObject(client, bucket, key, 100 * 4096 * 4096);
+                Util.PutRandomObject(client, bucket, key, 100 * 4096 * 4096, StorageClassType.StorageClassStandard);
                 Util.WaitUntilObjectExist(client, bucket, key);
 
                 var deleteObjectInput = new DeleteObjectInput
@@ -275,7 +275,7 @@ namespace TestTOS
                 Content = Util.ConvertStringToStream(data),
                 StorageClass = StorageClassType.StorageClassIa,
                 ACL = ACLType.ACLPublicRead,
-                ContentDisposition = "test-disposition",
+                ContentDisposition = "attachment; filename=中文%&!@#$%^&*()202411.2029.txt",
                 Expires = DateTime.Now.AddHours(1),
                 Meta = new Dictionary<string, string>() { { "aaa", "bbb" }, { "中文键", "中文值" } },
                 ContentEncoding = "test-encoding",

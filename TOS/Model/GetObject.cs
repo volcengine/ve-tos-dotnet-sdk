@@ -123,7 +123,7 @@ namespace TOS.Model
 
             if (!string.IsNullOrEmpty(ResponseContentDisposition))
             {
-                request.Query[Constants.QueryResponseContentDisposition] = ResponseContentDisposition;
+                request.Query[Constants.QueryResponseContentDisposition] = Utils.UrlEncodeChinese(ResponseContentDisposition);
             }
 
             if (!string.IsNullOrEmpty(ResponseContentEncoding))

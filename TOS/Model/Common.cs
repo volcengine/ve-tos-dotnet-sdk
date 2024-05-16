@@ -41,6 +41,11 @@ namespace TOS.Model
         public PermissionType? Permission { set; get; }
     }
 
+    public class RestoreJobParameters
+    {
+        public TierType? Tier  { set; get; }
+    }
+    
     internal interface IHttpBasicHeader
     {
         long ContentLength { get; }
