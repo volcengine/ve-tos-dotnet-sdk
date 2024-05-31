@@ -268,6 +268,7 @@ namespace TestTOS
             Util.DeleteObjectAndCheckResponse(client, bucket, key2);
 
             // 所有参数上传对象
+            var taggingStr = "k1_K123%20%3A%2B-%3D._%2F=v1_K123%20%3A%2B-%3D._%2F&k0_K123%20%3A%2B-%3D._%2F=v0_K123%20%3A%2B-%3D._%2F";
             var putObjectInput = new PutObjectInput()
             {
                 Bucket = bucket,
@@ -282,7 +283,8 @@ namespace TestTOS
                 ContentLanguage = "test-language",
                 ContentType = "text/plain",
                 WebsiteRedirectLocation = "http://test-website-redirection-location",
-                ContentMD5 = md5
+                ContentMD5 = md5,
+                Tagging = taggingStr,
             };
             var putObjectOutput = client.PutObject(putObjectInput);
             Assert.Greater(putObjectOutput.RequestID.Length, 0);
@@ -301,6 +303,29 @@ namespace TestTOS
             Assert.AreEqual(putObjectInput.Meta.Count, getObjectOutput.Meta.Count);
             Assert.AreEqual("bbb", getObjectOutput.Meta["x-tos-meta-aaa"]);
             Assert.AreEqual("中文值", getObjectOutput.Meta["x-tos-meta-中文键"]);
+            Assert.AreEqual(2, getObjectOutput.TaggingCount);
+            
+            var getObjectTaggingInput = new GetObjectTaggingInput()
+            {
+                Bucket = bucket,
+                Key = key1,
+            };
+            var getObjectTaggingOutput = client.GetObjectTagging(getObjectTaggingInput);
+            Assert.AreEqual(200, getObjectTaggingOutput.StatusCode);
+            Assert.AreEqual(2, getObjectTaggingOutput.TagSet.Tags.Length);
+            Assert.AreEqual("k1_K123 :+-=._/", getObjectTaggingOutput.TagSet.Tags[0].Key);
+            Assert.AreEqual("v1_K123 :+-=._/", getObjectTaggingOutput.TagSet.Tags[0].Value);
+            Assert.AreEqual("k0_K123 :+-=._/", getObjectTaggingOutput.TagSet.Tags[1].Key);
+            Assert.AreEqual("v0_K123 :+-=._/", getObjectTaggingOutput.TagSet.Tags[1].Value);
+            
+            var headObjectInput = new HeadObjectInput()
+            {
+                Bucket = bucket,
+                Key = key1,
+            };
+            var headObjectOutput = client.HeadObject(headObjectInput);
+            Assert.AreEqual(200, headObjectOutput.StatusCode);
+            Assert.AreEqual(2, headObjectOutput.TaggingCount);
 
             // 上传大小为 0 的对象
             Util.PutObjectFromStreamAndCheckResponse(client, bucket, key1, null);

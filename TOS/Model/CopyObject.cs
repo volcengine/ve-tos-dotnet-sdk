@@ -93,7 +93,11 @@ namespace TOS.Model
         public StorageClassType? StorageClass { set; get; }
 
         public MetadataDirectiveType? MetadataDirective { set; get; }
+        
+        public string Tagging  { set; get; }
 
+        public TaggingDirectiveType? TaggingDirective  { set; get; }
+        
         internal sealed override HttpRequest Trans()
         {
             HttpRequest request = base.Trans();
@@ -109,6 +113,16 @@ namespace TOS.Model
             if (MetadataDirective.HasValue)
             {
                 request.Header[Constants.HeaderMetadataDirective] = Enums.TransEnum(MetadataDirective.Value);
+            }
+
+            if (!string.IsNullOrEmpty(Tagging))
+            {
+                request.Header[Constants.HeaderTagging] = Tagging;
+            }
+            
+            if (TaggingDirective.HasValue)
+            {
+                request.Header[Constants.HeaderTaggingDirective] = Enums.TransEnum(TaggingDirective.Value);
             }
 
             return request;

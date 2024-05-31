@@ -106,6 +106,12 @@ namespace TOS.Model
         [StringValue("Expedited")] Expedited,
         [StringValue("Bulk")] Bulk
     }
+    
+    public enum TaggingDirectiveType
+    {
+        [StringValue("Copy")] TaggingDirectiveCopy,
+        [StringValue("Replace")] TaggingDirectiveReplace,
+    }
 
     internal class StringValueAttribute : Attribute
     {
@@ -138,7 +144,7 @@ namespace TOS.Model
             {
                 typeof(HttpMethodType), typeof(ACLType), typeof(StorageClassType),
                 typeof(AzRedundancyType), typeof(MetadataDirectiveType), typeof(PermissionType),
-                typeof(GranteeType), typeof(CannedType)
+                typeof(GranteeType), typeof(CannedType), typeof(TaggingDirectiveType)
             };
 
             string ret;

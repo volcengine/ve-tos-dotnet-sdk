@@ -31,10 +31,12 @@ namespace TestTOS
             Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
 
             // 初始化段
+            var taggingStr = "k1_K123%20%3A%2B-%3D._%2F=v1_K123%20%3A%2B-%3D._%2F&k0_K123%20%3A%2B-%3D._%2F=v0_K123%20%3A%2B-%3D._%2F";
             var createMultipartUploadInput = new CreateMultipartUploadInput
             {
                 Bucket = bucket,
-                Key = key1
+                Key = key1,
+                Tagging = taggingStr,
             };
             var createMultipartUploadOutput = client.CreateMultipartUpload(createMultipartUploadInput);
             Assert.Greater(createMultipartUploadOutput.RequestID.Length, 0);
@@ -118,6 +120,7 @@ namespace TestTOS
                 Key = key1
             };
             var getObjectOutput = client.GetObject(getObjectInput);
+            Assert.AreEqual(2, getObjectOutput.TaggingCount);
 
             using (var fileStream = new FileStream(dstFilePath1, FileMode.Create, FileAccess.Write))
             {

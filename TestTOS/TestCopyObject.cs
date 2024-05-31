@@ -20,6 +20,9 @@ namespace TestTOS
             var key1 = Util.GenerateObjectName("normal-1");
             var key2 = Util.GenerateObjectName("normal-2");
             var data = "hello world";
+            var taggingStr1 = "k1_K123%20%3A%2B-%3D._%2F=v1_K123%20%3A%2B-%3D._%2F";
+            var taggingStr2 = "k1_K123%20%3A%2B-%3D._%2F=v1_K123%20%3A%2B-%3D._%2F&k0_K123%20%3A%2B-%3D._%2F=v0_K123%20%3A%2B-%3D._%2F";
+
 
             var createBucketInput = new CreateBucketInput
             {
@@ -32,7 +35,8 @@ namespace TestTOS
                 Bucket = bucket1,
                 Key = key1,
                 Content = Util.ConvertStringToStream(data),
-                Meta = new Dictionary<string, string>() { { "aaa", "bbb" }, { "ccc", "ddd" } }
+                Meta = new Dictionary<string, string>() { { "aaa", "bbb" }, { "ccc", "ddd" } },
+                Tagging = taggingStr1
             };
             var putObjectOutput = client.PutObject(putObjectInput);
             Assert.Greater(putObjectOutput.RequestID.Length, 0);                
@@ -45,7 +49,8 @@ namespace TestTOS
                 SrcBucket = bucket1,
                 SrcKey = key1,
                 Bucket = bucket1,
-                Key = dstKey1
+                Key = dstKey1,
+                Tagging = taggingStr2,
             };
             var copyObjectOutput = client.CopyObject(copyObjectInput);
             Assert.Greater(copyObjectOutput.RequestID.Length, 0);                
@@ -58,6 +63,7 @@ namespace TestTOS
             };
             var getObjectOutput = client.GetObject(getObjectInput);
             Assert.Greater(getObjectOutput.RequestID.Length, 0);
+            Assert.AreEqual(1, getObjectOutput.TaggingCount);
             Assert.AreEqual(data, Util.ReadStreamAsString(getObjectOutput.Content));
             getObjectOutput.Content.Close();
             
@@ -72,7 +78,7 @@ namespace TestTOS
                 SrcBucket = bucket1,
                 SrcKey = key1,
                 Bucket = bucket2,
-                Key = dstKey1
+                Key = dstKey1,
             };
             copyObjectOutput = client.CopyObject(copyObjectInput);
             Assert.Greater(copyObjectOutput.RequestID.Length, 0);                
@@ -85,6 +91,30 @@ namespace TestTOS
             };
             getObjectOutput = client.GetObject(getObjectInput);
             Assert.Greater(getObjectOutput.RequestID.Length, 0);
+            Assert.AreEqual(1, getObjectOutput.TaggingCount);
+            Assert.AreEqual(data, Util.ReadStreamAsString(getObjectOutput.Content));
+            getObjectOutput.Content.Close();
+            
+            copyObjectInput = new CopyObjectInput()
+            {
+                SrcBucket = bucket1,
+                SrcKey = key1,
+                Bucket = bucket2,
+                Key = dstKey1,
+                TaggingDirective = TaggingDirectiveType.TaggingDirectiveCopy
+            };
+            copyObjectOutput = client.CopyObject(copyObjectInput);
+            Assert.Greater(copyObjectOutput.RequestID.Length, 0);                
+            Assert.Greater(copyObjectOutput.ETag.Length, 0);  
+            
+            getObjectInput = new GetObjectInput()
+            {
+                Bucket = bucket2,
+                Key = dstKey1
+            };
+            getObjectOutput = client.GetObject(getObjectInput);
+            Assert.Greater(getObjectOutput.RequestID.Length, 0);
+            Assert.AreEqual(1, getObjectOutput.TaggingCount);
             Assert.AreEqual(data, Util.ReadStreamAsString(getObjectOutput.Content));
             getObjectOutput.Content.Close();
             
@@ -105,7 +135,9 @@ namespace TestTOS
                 ContentLanguage = "test-language",
                 ContentType = "text/plain",
                 WebsiteRedirectLocation = "http://test-website-redirection-location",
-                MetadataDirective = MetadataDirectiveType.MetadataDirectiveCopy
+                MetadataDirective = MetadataDirectiveType.MetadataDirectiveCopy,
+                Tagging = taggingStr2,
+                TaggingDirective = TaggingDirectiveType.TaggingDirectiveReplace
             };
             copyObjectOutput = client.CopyObject(copyObjectInput);
             Assert.Greater(copyObjectOutput.RequestID.Length, 0);                
@@ -124,6 +156,7 @@ namespace TestTOS
             Assert.AreEqual(copyObjectInput.Meta.Count, getObjectOutput.Meta.Count);
             Assert.AreEqual("bbb", getObjectOutput.Meta["x-tos-meta-aaa"]);
             Assert.AreEqual("ddd", getObjectOutput.Meta["x-tos-meta-ccc"]);
+            Assert.AreEqual(2, getObjectOutput.TaggingCount);
 
             copyObjectInput.StorageClass = StorageClassType.StorageClassStandard;
             copyObjectInput.MetadataDirective = MetadataDirectiveType.MetadataDirectiveReplace;

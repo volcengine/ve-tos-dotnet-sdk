@@ -45,6 +45,17 @@ namespace TOS.Model
     {
         public TierType? Tier  { set; get; }
     }
+
+    public class TagSet
+    {
+        public Tag[] Tags { set; get; }
+    }
+    
+    public class Tag
+    {
+        public string Key { set; get; }
+        public string Value { set; get; }
+    }
     
     internal interface IHttpBasicHeader
     {

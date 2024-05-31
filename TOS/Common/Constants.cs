@@ -21,7 +21,7 @@ namespace TOS.Common
     internal class Constants
     {
         // http client
-        internal const string Version = "v2.1.3";
+        internal const string Version = "v2.1.4";
         internal const int DefaultConnectionTimeout = 10000;
         internal const int DefaultSocketTimeout = 30000;
         internal const int DefaultMaxConnections = 1024;
@@ -105,6 +105,9 @@ namespace TOS.Common
         internal const string HeaderCopySourceIfNoneMatch = HeaderPrefix + "copy-source-if-none-match";
         internal const string HeaderCopySourceIfUnmodifiedSince = HeaderPrefix + "copy-source-if-unmodified-since";
 
+        internal const string HeaderTagging = HeaderPrefix + "tagging";
+        internal const string HeaderTaggingCount = HeaderPrefix + "tagging-count";
+        internal const string HeaderTaggingDirective = HeaderPrefix + "tagging-directive";
         internal const string HeaderVersionID = HeaderPrefix + "version-id";
         internal const string HeaderCopySourceVersionID = HeaderPrefix + "copy-source-version-id";
         internal const string HeaderHashCrc64ecma = HeaderPrefix + "hash-crc64ecma";
@@ -153,6 +156,7 @@ namespace TOS.Common
         internal const string QuerySignedHeaders = "X-Tos-SignedHeaders";
         internal const string QuerySecurityToken = "X-Tos-Security-Token";
         internal const string QuerySignature = "X-Tos-Signature";
+        internal const string QueryTagging = "tagging";
 
         internal static readonly CultureInfo DefaultCultureInfo = CultureInfo.GetCultureInfo("en-US");
     }

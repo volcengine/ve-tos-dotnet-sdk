@@ -89,7 +89,7 @@ namespace TOS.Auth
                 request.Query[Constants.QuerySignedHeaders] = signedHeaders;
                 if (!string.IsNullOrEmpty(credential.SecurityToken))
                 {
-                    request.Header[Constants.QuerySecurityToken] = credential.SecurityToken;
+                    request.Query[Constants.QuerySecurityToken] = credential.SecurityToken;
                 }
 
                 string canonicalRequest = this.GetCanonicalRequest(request, canonicalHeaders, signedHeaders, true);

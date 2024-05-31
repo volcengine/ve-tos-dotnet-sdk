@@ -81,11 +81,19 @@ namespace TOS.Model
         
         public string Callback { set; get; }
         public string CallbackVar { set; get; }
+        
+        public string Tagging { set; get; }
 
         internal override HttpRequest Trans()
         {
             HttpRequest request = base.Trans();
             request.Method = HttpMethodType.HttpMethodPut;
+            
+            if (!string.IsNullOrEmpty(Tagging))
+            {
+                request.Header[Constants.HeaderTagging] = Tagging;
+            }
+            
             if (!string.IsNullOrEmpty(ContentMD5))
             {
                 request.Header[Constants.HeaderContentMD5] = ContentMD5;

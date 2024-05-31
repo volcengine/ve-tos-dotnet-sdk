@@ -56,6 +56,7 @@
         <Compile Include="TestListObjects.cs" />
         <Compile Include="TestMultipartList.cs" />
         <Compile Include="TestMultipartUpload.cs" />
+        <Compile Include="TestObjectTagging.cs" />
         <Compile Include="TestPreSignedURL.cs" />
         <Compile Include="TestPutObject.cs" />
         <Compile Include="TestPutObjectAcl.cs" />

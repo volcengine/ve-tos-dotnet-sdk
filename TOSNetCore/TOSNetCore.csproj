@@ -6,7 +6,7 @@
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Volcengine.TOS.SDK</PackageId>
-        <Version>2.1.3</Version>
+        <Version>2.1.4</Version>
         <Authors>volcengine</Authors>
         <Company>volcengine</Company>
         <Description>.Net SDK for Volcengine TOS</Description>
@@ -166,6 +166,15 @@
       </Compile>
       <Compile Include="..\TOS\Model\UploadPartFromFile.cs">
         <Link>Model\UploadPartFromFile.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\PutObjectTagging.cs">
+        <Link>Model\PutObjectTagging.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\GetObjectTagging.cs">
+        <Link>Model\GetObjectTagging.cs</Link>
+      </Compile>
+      <Compile Include="..\TOS\Model\DeleteObjectTagging.cs">
+        <Link>Model\DeleteObjectTagging.cs</Link>
       </Compile>
       <Compile Include="..\TOS\TosClient.basic.cs">
         <Link>TosClient.basic.cs</Link>

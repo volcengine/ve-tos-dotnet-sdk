@@ -70,9 +70,11 @@
         <Compile Include="Model\DeleteBucket.cs" />
         <Compile Include="Model\DeleteMultiObjects.cs" />
         <Compile Include="Model\DeleteObject.cs" />
+        <Compile Include="Model\DeleteObjectTagging.cs" />
         <Compile Include="Model\Enums.cs" />
         <Compile Include="Model\GetObject.cs" />
         <Compile Include="Model\GetObjectACL.cs" />
+        <Compile Include="Model\GetObjectTagging.cs" />
         <Compile Include="Model\GetObjectToFile.cs" />
         <Compile Include="Model\HeadBucket.cs" />
         <Compile Include="Model\HeadObject.cs" />
@@ -83,6 +85,7 @@
         <Compile Include="Model\ListParts.cs" />
         <Compile Include="Model\PreSignedURL.cs" />
         <Compile Include="Model\PutObject.cs" />
+        <Compile Include="Model\PutObjectTagging.cs" />
         <Compile Include="Model\RestoreObject.cs" />
         <Compile Include="Model\PutObjectACL.cs" />
         <Compile Include="Model\PutObjectFromFile.cs" />
