@@ -61,6 +61,12 @@
       <Compile Include="..\TestTOS\TestUploadFile.cs">
         <Link>TestUploadFile.cs</Link>
       </Compile>
+      <Compile Include="..\TestTOS\TestRestoreObject.cs">
+        <Link>TestRestoreObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TestTOS\TestObjectTagging.cs">
+        <Link>TestObjectTagging.cs</Link>
+      </Compile>
       <Compile Include="..\TestTOS\Util.cs">
         <Link>Util.cs</Link>
       </Compile>

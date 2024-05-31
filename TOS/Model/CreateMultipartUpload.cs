@@ -65,6 +65,8 @@ namespace TOS.Model
 
         public StorageClassType? StorageClass { set; get; }
 
+        public string Tagging { set; get; }
+        
         internal sealed override HttpRequest Trans()
         {
             HttpRequest request = base.Trans();
@@ -81,6 +83,11 @@ namespace TOS.Model
                 request.Query[Constants.QueryEncodingType] = EncodingType;
             }
 
+            if (!string.IsNullOrEmpty(Tagging))
+            {
+                request.Header[Constants.HeaderTagging] = Tagging;
+            }
+            
             request.Query["uploads"] = string.Empty;
 
             return request;

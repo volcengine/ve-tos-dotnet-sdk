@@ -57,6 +57,12 @@ namespace TOS
 
         PutObjectACLOutput PutObjectACL(PutObjectACLInput input);
 
+        PutObjectTaggingOutput PutObjectTagging(PutObjectTaggingInput input);
+        
+        GetObjectTaggingOutput GetObjectTagging(GetObjectTaggingInput input);
+        
+        DeleteObjectTaggingOutput DeleteObjectTagging(DeleteObjectTaggingInput input);
+        
         SetObjectMetaOutput SetObjectMeta(SetObjectMetaInput input);
 
         CreateMultipartUploadOutput CreateMultipartUpload(CreateMultipartUploadInput input);

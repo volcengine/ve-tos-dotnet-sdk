@@ -89,7 +89,22 @@ namespace TOS
         {
             return this.DoRequest<PutObjectACLInput, PutObjectACLOutput>(input);
         }
+        
+        public PutObjectTaggingOutput PutObjectTagging(PutObjectTaggingInput input)
+        {
+            return this.DoRequest<PutObjectTaggingInput, PutObjectTaggingOutput>(input);
+        }
 
+        public GetObjectTaggingOutput GetObjectTagging(GetObjectTaggingInput input)
+        {
+            return this.DoRequest<GetObjectTaggingInput, GetObjectTaggingOutput>(input);
+        }
+        
+        public DeleteObjectTaggingOutput DeleteObjectTagging(DeleteObjectTaggingInput input)
+        {
+            return this.DoRequest<DeleteObjectTaggingInput, DeleteObjectTaggingOutput>(input);
+        }
+        
         public SetObjectMetaOutput SetObjectMeta(SetObjectMetaInput input)
         {
             return this.DoRequest<SetObjectMetaInput, SetObjectMetaOutput>(input);

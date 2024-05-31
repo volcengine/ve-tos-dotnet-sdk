@@ -87,6 +87,8 @@ namespace TOS.Model
 
         public IDictionary<string, string> Meta { internal set; get; }
 
+        public int TaggingCount { internal set; get; }
+        
         public long ContentLength
         {
             internal set
@@ -137,6 +139,12 @@ namespace TOS.Model
 
             response.Header.TryGetValue(Constants.HeaderObjectType, out temp);
             ObjectType = temp;
+            
+            response.Header.TryGetValue(Constants.HeaderTaggingCount, out temp);
+            if (!string.IsNullOrEmpty(temp))
+            {
+                TaggingCount = Convert.ToInt32(temp);
+            }
 
             response.Header.TryGetValue(Constants.HeaderHashCrc64ecma, out temp);
             if (!string.IsNullOrEmpty(temp))
