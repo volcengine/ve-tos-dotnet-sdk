@@ -62,7 +62,8 @@ namespace TOS.Common
             result.CheckConnect(this._configHolder.ConnectionTimeout);
             if (requestTimeout > 0)
             {
-                requestTimeout -= (int)((DateTime.UtcNow.Ticks - start.Ticks) / 1000000);
+                TimeSpan elapsedSpan = new TimeSpan(DateTime.UtcNow.Ticks - start.Ticks);
+                requestTimeout -= (int)elapsedSpan.TotalMilliseconds;
                 if (requestTimeout <= 0)
                 {
                     result.Abort(new TimeoutException("request timeout"));
