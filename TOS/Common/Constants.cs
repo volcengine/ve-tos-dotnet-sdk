@@ -21,7 +21,7 @@ namespace TOS.Common
     internal class Constants
     {
         // http client
-        internal const string Version = "v2.1.4";
+        internal const string Version = "v2.1.6";
         internal const int DefaultConnectionTimeout = 10000;
         internal const int DefaultSocketTimeout = 30000;
         internal const int DefaultMaxConnections = 1024;

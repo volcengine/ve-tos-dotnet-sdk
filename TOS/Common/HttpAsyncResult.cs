@@ -120,6 +120,23 @@ namespace TOS.Common
                 }
             }
 
+            // fix bug for netcore due to HttpWebRequest.Abort is not implemented correctly
+            if (this._context.HttpRequest != null && this._context.HttpRequest.Body != null)
+            {
+                IDisposable disposable = this._context.HttpRequest.Body as IDisposable;
+                if (disposable != null)
+                {
+                    try
+                    {
+                        disposable.Dispose();
+                    }
+                    catch (Exception exx)
+                    {
+                        // ignore exception
+                    }
+                }
+            }
+
             this.Set(ex);
         }
 
@@ -131,7 +148,9 @@ namespace TOS.Common
             }
             else if (!this._requestFinished.WaitOne(millisecondsTimeout))
             {
-                throw new TimeoutException("request timeout");
+                Exception ex = new TimeoutException("request timeout");
+                this.Abort(ex);
+                throw ex;
             }
 
             if (this._ex != null)

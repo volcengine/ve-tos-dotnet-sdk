@@ -22,6 +22,7 @@ using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using TOS.Config;
 using TOS.Model;
 
 namespace TOS.Common
@@ -30,8 +31,9 @@ namespace TOS.Common
     {
         private static volatile MethodInfo _addHeaderInternal;
         private static readonly object _lock = new object();
-        private static string _addHeaderInternalMethodName = "AddInternal";
-        private static string _addHeaderMethodName = "Add";
+        private static readonly string _addHeaderInternalMethodName = "AddInternal";
+        private static readonly string _addHeaderMethodName = "Add";
+        private static volatile ConfigHolder _lastConfigHolder;
 
         private HttpWebRequest CreateHttpWebRequest(HttpRequest request)
         {
@@ -63,32 +65,17 @@ namespace TOS.Common
 
         private HttpWebRequest CreateHttpWebRequest(string requestUrl, string method)
         {
-            ServicePointManager.DefaultConnectionLimit = this._configHolder.MaxConnections;
-            ServicePointManager.MaxServicePoints = this._configHolder.MaxConnections;
-            ServicePointManager.MaxServicePointIdleTime = this._configHolder.IdleConnectionTime;
-            if (this._configHolder.SecurityProtocolType > 0)
-            {
-                ServicePointManager.SecurityProtocol = this._configHolder.SecurityProtocolType;
-            }
-
-            if (requestUrl.StartsWith(Constants.SchemaHttps) && !this._configHolder.EnableVerifySSL)
-            {
-                ServicePointManager.ServerCertificateValidationCallback =
-                    delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
-                    {
-                        return true;
-                    };
-            }
-
+            ConfigureServicePointManager(this._configHolder);
             HttpWebRequest req = WebRequest.Create(requestUrl) as HttpWebRequest;
             req.Timeout = Timeout.Infinite;
             req.ReadWriteTimeout = Timeout.Infinite;
             try
             {
-                req.ServicePoint.ReceiveBufferSize = Constants.DefaultBufferSize;
-                req.ServicePoint.ConnectionLimit = this._configHolder.MaxConnections;
-                req.ServicePoint.MaxIdleTime = this._configHolder.IdleConnectionTime;
-                req.ServicePoint.ConnectionLeaseTimeout = Timeout.Infinite;
+                ServicePoint sp = req.ServicePoint;
+                sp.ReceiveBufferSize = Constants.DefaultBufferSize;
+                sp.ConnectionLimit = this._configHolder.MaxConnections;
+                sp.MaxIdleTime = this._configHolder.IdleConnectionTime;
+                sp.ConnectionLeaseTimeout = Timeout.Infinite;
             }
             catch (Exception ex)
             {
@@ -144,6 +131,59 @@ namespace TOS.Common
                     req.SendChunked = true;
                     req.AllowWriteStreamBuffering = false;
                 }
+            }
+        }
+
+        private static bool SkipConfigureServicePointManage(ConfigHolder lch, ConfigHolder configHolder)
+        {
+            if (configHolder == null)
+            {
+                return true;
+            }
+
+            if (lch == null)
+            {
+                return false;
+            }
+
+            return lch.MaxConnections == configHolder.MaxConnections &&
+                   lch.IdleConnectionTime == configHolder.IdleConnectionTime
+                   && lch.SecurityProtocolType == configHolder.SecurityProtocolType &&
+                   lch.EnableVerifySSL == configHolder.EnableVerifySSL;
+        }
+
+        private static void ConfigureServicePointManager(ConfigHolder configHolder)
+        {
+            if (SkipConfigureServicePointManage(_lastConfigHolder, configHolder))
+            {
+                return;
+            }
+
+            lock (_lock)
+            {
+                if (SkipConfigureServicePointManage(_lastConfigHolder, configHolder))
+                {
+                    return;
+                }
+
+                ServicePointManager.DefaultConnectionLimit = configHolder.MaxConnections;
+                ServicePointManager.MaxServicePoints = configHolder.MaxConnections;
+                ServicePointManager.MaxServicePointIdleTime = configHolder.IdleConnectionTime;
+                if (configHolder.SecurityProtocolType > 0)
+                {
+                    ServicePointManager.SecurityProtocol = configHolder.SecurityProtocolType;
+                }
+
+                if (!configHolder.EnableVerifySSL)
+                {
+                    ServicePointManager.ServerCertificateValidationCallback =
+                        delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+                        {
+                            return true;
+                        };
+                }
+
+                _lastConfigHolder = configHolder;
             }
         }
 
