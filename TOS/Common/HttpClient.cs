@@ -87,11 +87,20 @@ namespace TOS.Common
                 schemaDomain = RegionEndpoint.SplitEndpoint(alternativeEndpoint);
             }
 
-            signedHeader = this._signer.SignQuery(request, this._configHolder.Credential,
-                this._configHolder.RegionEndpoint, expires, schemaDomain.Domain);
+            var isCustomDomain = request.IsCustomDomain ?? false;
 
-            string signedUrl = this._configHolder.RegionEndpoint.GetEndpoint(request.Bucket, request.Key,
+            signedHeader = this._signer.SignQuery(request, this._configHolder.Credential,
+                this._configHolder.RegionEndpoint, expires, schemaDomain.Domain, isCustomDomain);
+
+            var bucket = request.Bucket;
+            if (isCustomDomain)
+            {
+                bucket = string.Empty;
+            }
+            
+            string signedUrl = this._configHolder.RegionEndpoint.GetEndpoint(bucket, request.Key,
                 schemaDomain.Schema, schemaDomain.Domain, true);
+            
             if (request.Query.Count > 0)
             {
                 signedUrl += "?";

@@ -56,6 +56,8 @@ namespace TOS.Model
         }
 
         public string AlternativeEndpoint { get; set; }
+        
+        public bool? IsCustomDomain { get; set; }
 
         internal HttpRequest Trans()
         {
@@ -87,6 +89,8 @@ namespace TOS.Model
 
             request.AdditionalState = AlternativeEndpoint;
 
+            request.IsCustomDomain = IsCustomDomain;
+            
             return request;
         }
     }

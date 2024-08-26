@@ -63,7 +63,7 @@ namespace TOS.Auth
         }
 
         internal IDictionary<string, string> SignQuery(HttpRequest request, Credential credential,
-            RegionEndpoint regionEndpoint, int expires, string domain)
+            RegionEndpoint regionEndpoint, int expires, string domain, bool isCustomDomain)
         {
             IDictionary<string, string> signedHeader;
             if (credential.IsAnonymous)
@@ -78,7 +78,12 @@ namespace TOS.Auth
                 this.PrepareDateAndCredentialScope(out longDate, out shortDate, out credentialScope,
                     regionEndpoint.Region);
 
-                request.Header[Constants.HeaderHost] = regionEndpoint.GetHost(request.Bucket, domain);
+                var bucket = request.Bucket;
+                if (isCustomDomain)
+                {
+                    bucket = string.Empty;
+                }
+                request.Header[Constants.HeaderHost] = regionEndpoint.GetHost(bucket, domain);
 
                 string signedHeaders;
                 string canonicalHeaders = this.GetCanonicalHeaders(request, out signedHeaders, out signedHeader);

@@ -62,6 +62,8 @@ namespace TOS.Common
 
         internal object AdditionalState { get; set; }
 
+        internal bool? IsCustomDomain { get; set; }
+        
         public void Dispose()
         {
             try

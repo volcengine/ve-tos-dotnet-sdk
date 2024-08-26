@@ -109,6 +109,7 @@ namespace TOS.Config
             }
 
             string endpoint = schema;
+            
             if (!string.IsNullOrEmpty(bucket) && !string.IsNullOrEmpty(bucket = bucket.Trim()))
             {
                 endpoint += bucket + "." + domain;
@@ -119,6 +120,7 @@ namespace TOS.Config
             }
             else
             {
+                // 自定义域名场景
                 endpoint += domain;
                 if (mustAddKey && !string.IsNullOrEmpty(key))
                 {
