@@ -24,7 +24,7 @@ namespace TOS.Common
 {
     internal class HttpResponse : IDisposable
     {
-        private static IDictionary<string, string> _transEncodingKeys;
+        private static readonly IDictionary<string, string> _transEncodingKeys;
         private bool _disposed;
         private int _statusCode;
         private IDictionary<string, string> _header;
@@ -38,6 +38,11 @@ namespace TOS.Common
             _transEncodingKeys[Constants.HeaderContentDisposition] = string.Empty;
         }
 
+        internal HttpResponse(int statusCode)
+        {
+            _statusCode = statusCode;
+        }
+        
         internal HttpResponse(HttpWebResponse resp, int socketTimeout)
         {
             if (resp != null)
@@ -55,6 +60,19 @@ namespace TOS.Common
 
                 this.Body = new SocketTimeoutStream(resp.GetResponseStream(), socketTimeout);
             }
+        }
+        
+        internal string HandleValue(string key, IEnumerable<string> values)
+        {
+            if (values != null)
+            {
+                foreach (var value in values)
+                {
+                    return this.HandleValue(key, value);
+                }
+            }
+
+            return null;
         }
 
         private string HandleValue(string key, string value)
@@ -101,7 +119,7 @@ namespace TOS.Common
             get { return this._autoClose; }
             set { this._autoClose = value; }
         }
-
+        
         public void Dispose()
         {
             try

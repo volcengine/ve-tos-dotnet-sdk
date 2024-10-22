@@ -21,7 +21,7 @@ namespace TOS.Common
     internal class Constants
     {
         // http client
-        internal const string Version = "v2.1.7";
+        internal const string Version = "v2.1.8";
         internal const int DefaultConnectionTimeout = 10000;
         internal const int DefaultSocketTimeout = 30000;
         internal const int DefaultMaxConnections = 1024;
@@ -159,5 +159,7 @@ namespace TOS.Common
         internal const string QueryTagging = "tagging";
 
         internal static readonly CultureInfo DefaultCultureInfo = CultureInfo.GetCultureInfo("en-US");
+
+        internal const string QuotationMarkStr = "\"";
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq;
 using NUnit.Framework;
 using TOS;
 using TOS.Model;
@@ -25,8 +24,8 @@ namespace TestTOS
                 client.DeleteObject(deleteObjectInput);
             }
         }
-        
-        private static void ClearDotNetSdkPart(ITosClient client, string bucket)
+
+        public static void ClearDotNetSdkPart(ITosClient client, string bucket)
         {
             var listMultipartUploadsInput = new ListMultipartUploadsInput()
             {

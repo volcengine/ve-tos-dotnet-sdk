@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTOSNetCore", "TestTOSNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOSNetCore", "TOSNetCore\TOSNetCore.csproj", "{15DC8852-E869-428A-9299-3C880399809A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOSNetCoreNew", "TOSNetCoreNew\TOSNetCoreNew.csproj", "{3BB345B3-1BF4-49BD-BA20-10ABB1306DA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTOSNetCoreNew", "TestTOSNetCoreNew\TestTOSNetCoreNew.csproj", "{14F834C1-B225-412D-9316-8BA36CD5A037}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{15DC8852-E869-428A-9299-3C880399809A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15DC8852-E869-428A-9299-3C880399809A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15DC8852-E869-428A-9299-3C880399809A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB345B3-1BF4-49BD-BA20-10ABB1306DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB345B3-1BF4-49BD-BA20-10ABB1306DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB345B3-1BF4-49BD-BA20-10ABB1306DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB345B3-1BF4-49BD-BA20-10ABB1306DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14F834C1-B225-412D-9316-8BA36CD5A037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14F834C1-B225-412D-9316-8BA36CD5A037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14F834C1-B225-412D-9316-8BA36CD5A037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14F834C1-B225-412D-9316-8BA36CD5A037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

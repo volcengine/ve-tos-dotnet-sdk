@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net20;net35;net40;net45;netstandard2.0;netcoreapp2.0;netcoreapp3.1</TargetFrameworks>
+        <DefineConstants>HTTPCLIENT</DefineConstants>
+        <TargetFrameworks>net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
         <AssemblyName>Volcengine.TOS</AssemblyName>
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageId>Volcengine.TOS.SDK</PackageId>
+        <PackageId>Volcengine.TOS.SDK.NetCore</PackageId>
         <Version>2.1.8</Version>
         <Authors>volcengine</Authors>
         <Company>volcengine</Company>
@@ -207,7 +208,7 @@
             <PrivateAssets>build</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
 </Project>

@@ -172,9 +172,10 @@ namespace TOS.Auth
             if (request.Header.Count > 0)
             {
                 List<KeyValuePair<string, string>> kvlist = new List<KeyValuePair<string, string>>(request.Header);
+
                 kvlist.Sort(delegate(KeyValuePair<string, string> x, KeyValuePair<string, string> y)
                 {
-                    return string.Compare(x.Key, y.Key, StringComparison.Ordinal);
+                    return string.Compare(x.Key.ToLower(), y.Key.ToLower(), StringComparison.Ordinal);
                 });
                 string lowerKey;
                 string trimValue;

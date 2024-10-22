@@ -44,7 +44,7 @@ namespace TOS.Common
             return req;
         }
 
-        private string GetRequestUrl(HttpRequest request)
+        protected string GetRequestUrl(HttpRequest request)
         {
             string requestUrl =
                 this._configHolder.RegionEndpoint.GetEndpoint(request.Bucket, request.Key);

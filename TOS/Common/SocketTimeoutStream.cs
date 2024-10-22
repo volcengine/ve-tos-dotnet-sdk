@@ -11,6 +11,8 @@ namespace TOS.Common
         private Stream _origin;
         private int _socketTimeout;
         private SocketTimeoutAsyncResult result;
+        private long _length = -1;
+        private long _remaining = -1;
 
         internal SocketTimeoutStream(Stream origin, int socketTimeout)
         {
@@ -26,6 +28,24 @@ namespace TOS.Common
 
         public override int Read(byte[] buffer, int offset, int count)
         {
+            if (_length >= 0)
+            {
+                if (_remaining == 0)
+                {
+                    return 0;
+                }
+
+                if (_remaining <= count)
+                {
+                    count = (int)_remaining;
+                }
+                
+                result.BeginReadWriteOnce(buffer, offset, count, false);
+                int ret = result.EndReadOnce();
+                _remaining -= ret;
+                return ret;
+            }
+            
             result.BeginReadWriteOnce(buffer, offset, count, false);
             return result.EndReadOnce();
         }
@@ -54,7 +74,11 @@ namespace TOS.Common
 
         public override void SetLength(long value)
         {
-            this._origin.SetLength(value);
+            if (value >= 0)
+            {
+                this._length = value;
+                this._remaining = value;
+            }
         }
 
         public override bool CanRead
@@ -74,7 +98,14 @@ namespace TOS.Common
 
         public override long Length
         {
-            get { return this._origin.Length; }
+            get
+            {
+                if (this._length >= 0)
+                {
+                    return this._length;
+                }
+                return this._origin.Length;
+            }
         }
 
         public override long Position
