@@ -29,11 +29,15 @@ namespace TOS
     {
         public const string Version = Constants.Version;
 
-        private HttpClient _httpClient;
+        private IHttpClient _httpClient;
 
         internal TosClient(ConfigHolder configHolder)
         {
+#if HTTPCLIENT
+            _httpClient = new HttpClientV2(new Signer(), configHolder);
+#else
             _httpClient = new HttpClient(new Signer(), configHolder);
+#endif
         }
 
         private K DoRequest<T, K>(T input)
@@ -46,6 +50,11 @@ namespace TOS
             {
                 this.CheckBucketAndKey(input);
                 request = input.Trans();
+                
+#if HTTPCLIENT
+                request.Source = input.Source;
+#endif
+                
                 ConstructorInfo constructor = typeof(K).GetConstructor(new Type[] { });
                 K output = constructor?.Invoke(null) as K;
                 if (output == null)
@@ -87,7 +96,9 @@ namespace TOS
 
             response.Header.TryGetValue(Constants.HeaderID2, out temp);
             requestInfo.ID2 = temp;
-            if (response.StatusCode >= 300 || (response.StatusCode == 203 && (outputType == typeof(PutObjectOutput) || outputType == typeof(CompleteMultipartUploadOutput))))
+            if (response.StatusCode >= 300 || (response.StatusCode == 203 && (outputType == typeof(PutObjectOutput) ||
+                                                                              outputType ==
+                                                                              typeof(CompleteMultipartUploadOutput))))
             {
                 JObject json = Utils.TryParseJson(response.Body);
                 if (json != null)
@@ -124,6 +135,11 @@ namespace TOS
             {
                 Utils.CheckBucket((input as GenericBucketInput).Bucket);
             }
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
         }
     }
 }

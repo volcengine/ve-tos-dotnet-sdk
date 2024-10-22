@@ -64,6 +64,14 @@ namespace TOS.Common
 
         internal bool? IsCustomDomain { get; set; }
         
+#if HTTPCLIENT
+        internal System.Threading.CancellationTokenSource Source
+        {
+            set;
+            get;
+        }
+#endif
+
         public void Dispose()
         {
             try

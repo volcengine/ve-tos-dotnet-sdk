@@ -1,7 +1,7 @@
 # 火山引擎对象存储服务 .Net SDK
 
 ## 版本
-- 当前版本：2.1.7
+- 当前版本：2.1.8
 
 ## 运行环境
 
@@ -16,31 +16,39 @@
 ## 安装方法
 ### Windows 环境安装
 #### NuGet 安装
-- 如果您的 Visual Studio 没有安装 NuGet，请先安装 [NuGet](http://docs.nuget.org/docs/start-here/installing-nuget).
-- 安装好NuGet后，先在 `Visual Studio` 中新建或者打开已有的项目，然后选择`<工具>`－`<NuGet程序包管理器>`－`<管理解决方案的NuGet程序包>`，
-- 搜索 `Volcengine.TOS.SDK`，在结果中找到 `Volcengine.TOS.SDK`，选择最新版本，点击安装，成功后添加到项目应用中。
+- 如果您的 Visual Studio 没有安装 NuGet，请先安装 [NuGet](http://docs.nuget.org/docs/start-here/installing-nuget)。
+- 安装好NuGet后，先在 `Visual Studio` 中新建或者打开已有的项目，然后选择`<工具>`－`<NuGet程序包管理器>`－`<管理解决方案的NuGet程序包>`。
+- 搜索并安装 NuGet Package：
+    - .Net Core 5.0 及以上版本推荐：搜索 `Volcengine.TOS.SDK.NetCore`，在结果中找到 `Volcengine.TOS.SDK.NetCore`，选择最新版本，点击安装，成功后添加到项目应用中。
+    - 其他版本：搜索 `Volcengine.TOS.SDK`，在结果中找到 `Volcengine.TOS.SDK`，选择最新版本，点击安装，成功后添加到项目应用中。
+
+
 
 #### DLL 引用方式安装
 - 在 Github 下载最新版本的 TOS .Net SDK 项目代码。
 - TOS .Net SDK 代码库中 .Net Framework 和 .Net Core 版本共享一份代码，按需选择需要编译的项目。
-  - .Net Framework 版本编译 TOS/TOS.csproj 对应的项目
-  - .Net Core 版本编译 TOSNetCore/TOSNetCore.csproj 对应的项目
+  - .Net Framework 版本编译 TOS/TOS.csproj 对应的项目。
+  - .Net Core 5.0 以下版本编译 TOSNetCore/TOSNetCore.csproj 对应的项目。
+  - .Net Core 5.0 及以上版本编译 TOSNetCore/TOSNetCoreNew.csproj 对应的项目。
 - 选择 Release 模型，编译 ve-tos-dotnet-sdk 项目，生成 DLL。
 - 在 Visual Studio 的`<解决方案资源管理器>`中选择您的项目，然后右键`<项目名称>`-`<引用>`，在弹出的菜单中选择`<添加引用>`，
-  在弹出`<添加引用>`对话框后，选择`<浏览>`，找到SDK编译产物的目录，在 bin 目录下选中 `<Volcengine.TOS.dll>` 文件,点击确定即可
+  在弹出`<添加引用>`对话框后，选择`<浏览>`，找到SDK编译产物的目录，在 bin 目录下选中 `<Volcengine.TOS.dll>` 文件,点击确定即可。
 
 #### 项目引入方式安装
 - 在 Github 下载最新版本的 TOS .Net SDK 项目代码。
 - 在 VS 中打开或新建项目，右键单击解决方案，在弹出的在弹出的菜单中单击添加现有项目。
 - TOS .Net SDK 代码库中 .Net Framework 和 .Net Core 版本共享一份代码，按需选择项目。
-  - .Net Framework 版本，在弹出框中选择 TOS.csproj 文件，单击打开
-  - .Net Core 版本，在弹出框中选择 TOSNetCore.csproj 文件，单击打开
+  - .Net Framework 版本，在弹出框中选择 TOS.csproj 文件，单击打开。
+  - .Net Core 5.0 以下版本，在弹出框中选择 TOSNetCore.csproj 文件，单击打开。
+  - .Net Core 5.0 及以上版本，在弹出框中选择 TOSNetCoreNew.csproj 文件，单击打开。
 - 接下来右键`<您的项目>`－`<引用>`，选择`<添加引用>`，在弹出的对话框选择`<项目>`选项卡后选中上一步中您选中的项目，点击确定即可。
 
 ### Linux/Mac 环境安装
 #### NuGet 安装
 - 先在 `Xamarin` 中新建或者打开已有的项目，然后选择`<工具>`－`<Add NuGet Packages>`。
-- 搜索 `Volcengine.TOS.SDK`，在结果中找到 `Volcengine.TOS.SDK`，选择最新版本，点击 `<Add Package>`，成功后添加到项目应用中。
+- 搜索并安装 NuGet Package：
+    - .Net Core 5.0 及以上版本推荐：搜索 `Volcengine.TOS.SDK.NetCore`，在结果中找到 `Volcengine.TOS.SDK.NetCore`，选择最新版本，点击 `<Add Package>`，成功后添加到项目应用中。
+    - 其他版本：搜索 `Volcengine.TOS.SDK`，在结果中找到 `Volcengine.TOS.SDK`，选择最新版本，点击 `<Add Package>`，成功后添加到项目应用中。
 
 ## 快速使用
 #### 使用 TOS Endpoint 创建Client（Create TOS Client）

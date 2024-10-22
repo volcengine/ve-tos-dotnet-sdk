@@ -29,6 +29,14 @@ namespace TOS.Common
         {
             throw new TosClientException("invoke GenericInput.Trans");
         }
+        
+#if HTTPCLIENT
+        public System.Threading.CancellationTokenSource Source
+        {
+            set;
+            internal get;
+        }
+#endif
     }
 
     public abstract class GenericBucketInput : GenericInput

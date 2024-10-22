@@ -21,6 +21,7 @@ namespace TOS.Common
 {
     public abstract class GenericOutput
     {
+        
         protected RequestInfo _requestInfo;
 
         internal void Parse(HttpRequest request, HttpResponse response, RequestInfo requestInfo)

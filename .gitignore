@@ -5,6 +5,15 @@ TestTOS/bin
 TestTOS/obj
 TOSNetCore/bin
 TOSNetCore/obj
+TOSNetCore5/bin
+TOSNetCore5/obj
+TOSNetCore6/bin
+TOSNetCore6/obj
 TestTOSNetCore/bin
 TestTOSNetCore/obj
+TestTOSNetCore5/bin
+TestTOSNetCore5/obj
+TestTOSNetCore6/bin
+TestTOSNetCore6/obj
+ve-tos-csharp-sdk-gitlab.sln.DotSettings.user
 packages

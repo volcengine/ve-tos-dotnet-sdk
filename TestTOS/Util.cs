@@ -121,6 +121,15 @@ namespace TestTOS
                 return Convert.ToBase64String(hashBytes);
             }
         }
+        
+        public static string CalculateMd5(Stream s)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashBytes = md5.ComputeHash(s);
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
 
         public static string CalculateMd5FromFile(string filePath)
         {

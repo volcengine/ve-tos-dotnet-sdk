@@ -22,10 +22,10 @@ using TOS.Config;
 
 namespace TOS.Common
 {
-    internal partial class HttpClient
+    internal partial class HttpClient : IHttpClient
     {
-        private Signer _signer;
-        private ConfigHolder _configHolder;
+        protected Signer _signer;
+        protected ConfigHolder _configHolder;
 
         internal HttpClient(Signer signer, ConfigHolder configHolder)
         {
@@ -73,12 +73,12 @@ namespace TOS.Common
             return result.Get(requestTimeout);
         }
 
-        internal HttpResponse DoRequest(HttpRequest request)
+        public virtual HttpResponse DoRequest(HttpRequest request)
         {
             return this.EndDoRequest(this.BeginDoRequest(request, null, null));
         }
 
-        internal string GenPreSignedURL(HttpRequest request, int expires, out IDictionary<string, string> signedHeader)
+        public string GenPreSignedURL(HttpRequest request, int expires, out IDictionary<string, string> signedHeader)
         {
             string alternativeEndpoint = request.AdditionalState as string;
             SchemaDomain schemaDomain = new SchemaDomain();
@@ -97,10 +97,10 @@ namespace TOS.Common
             {
                 bucket = string.Empty;
             }
-            
+
             string signedUrl = this._configHolder.RegionEndpoint.GetEndpoint(bucket, request.Key,
                 schemaDomain.Schema, schemaDomain.Domain, true);
-            
+
             if (request.Query.Count > 0)
             {
                 signedUrl += "?";
@@ -123,6 +123,10 @@ namespace TOS.Common
             }
 
             return signedUrl;
+        }
+
+        public virtual void Dispose()
+        {
         }
     }
 }

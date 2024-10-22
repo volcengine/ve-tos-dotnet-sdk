@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
+using System;
 using TOS.Model;
 
 namespace TOS
 {
-    public interface ITosClient
+    public interface ITosClient : IDisposable
     {
         CreateBucketOutput CreateBucket(CreateBucketInput input);
 
@@ -52,17 +53,17 @@ namespace TOS
         PutObjectOutput PutObject(PutObjectInput input);
 
         RestoreObjectOutput RestoreObject(RestoreObjectInput input);
-        
+
         PutObjectFromFileOutput PutObjectFromFile(PutObjectFromFileInput input);
 
         PutObjectACLOutput PutObjectACL(PutObjectACLInput input);
 
         PutObjectTaggingOutput PutObjectTagging(PutObjectTaggingInput input);
-        
+
         GetObjectTaggingOutput GetObjectTagging(GetObjectTaggingInput input);
-        
+
         DeleteObjectTaggingOutput DeleteObjectTagging(DeleteObjectTaggingInput input);
-        
+
         SetObjectMetaOutput SetObjectMeta(SetObjectMetaInput input);
 
         CreateMultipartUploadOutput CreateMultipartUpload(CreateMultipartUploadInput input);

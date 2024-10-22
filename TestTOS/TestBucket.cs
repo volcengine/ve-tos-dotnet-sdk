@@ -16,11 +16,11 @@ namespace TestTOS
             {
                 Bucket = "non-existent-bucket"
             };
-            
+
             var ex = Assert.Throws<TosServerException>(() => client.HeadBucket(headBucketInput));
             Assert.AreEqual(404, ex.StatusCode);
         }
-        
+
         [Test]
         public void TestOnlyBucketNameV2()
         {
@@ -35,7 +35,7 @@ namespace TestTOS
                     Bucket = bucket
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
                 Util.CheckBucketMeta(client, bucket, env.Region, StorageClassType.StorageClassStandard);
             }
             finally
@@ -65,7 +65,7 @@ namespace TestTOS
                     AzRedundancy = AzRedundancyType.AzRedundancySingleAz
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
+
                 Util.CheckBucketMeta(client, bucket, env.Region, StorageClassType.StorageClassStandard);
             }
             finally
@@ -77,7 +77,7 @@ namespace TestTOS
                 client.DeleteBucket(deleteBucketInput);
             }
         }
-        
+
         [Test]
         public void TestAllParams3Az()
         {
@@ -95,8 +95,8 @@ namespace TestTOS
                     AzRedundancy = AzRedundancyType.AzRedundancyMultiAz
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-            
-                Util.CheckBucketMeta(client, bucket, env.Region, 
+
+                Util.CheckBucketMeta(client, bucket, env.Region,
                     StorageClassType.StorageClassStandard, AzRedundancyType.AzRedundancyMultiAz);
             }
             finally
@@ -108,23 +108,23 @@ namespace TestTOS
                 client.DeleteBucket(deleteBucketInput);
             }
         }
-        
+
         [Test]
         public void TestDeleteNoneExistBucketV2()
         {
             var env = new TestEnv();
             var bucket = "this-is-a-none-exist-bucket";
             var client = env.PrepareClient();
-            
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
             };
-            
+
             var ex = Assert.Throws<TosServerException>(() => client.DeleteBucket(deleteBucketInput));
             Assert.AreEqual(404, ex.StatusCode);
         }
-        
+
         [Test]
         public void TestDeleteBucketV2()
         {
@@ -137,21 +137,22 @@ namespace TestTOS
                 Bucket = bucket
             };
             Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-                
+
             var deleteBucketInput = new DeleteBucketInput
             {
                 Bucket = bucket
             };
             Assert.DoesNotThrow(() => client.DeleteBucket(deleteBucketInput));
         }
-        
+
         [Test]
         public void TestListBucketV2()
         {
             var env = new TestEnv();
-            var client = env.PrepareClientBuilder().SetSocketTimeout(360*1000).SetConnectionTimeout(360*1000).Build();
+            var client = env.PrepareClientBuilder().SetSocketTimeout(360 * 1000).SetConnectionTimeout(360 * 1000)
+                .Build();
             var bucket = Util.GenerateBucketName("delete-bucket");
-            
+
             try
             {
                 var createBucketInput = new CreateBucketInput
@@ -162,9 +163,9 @@ namespace TestTOS
                     AzRedundancy = AzRedundancyType.AzRedundancySingleAz
                 };
                 Assert.DoesNotThrow(() => client.CreateBucket(createBucketInput));
-                
+
                 var listOutput = client.ListBuckets();
-                Assert.AreEqual(200,listOutput.StatusCode);
+                Assert.AreEqual(200, listOutput.StatusCode);
                 var testBucket = new List<string>() { };
                 foreach (var b in listOutput.Buckets)
                 {
@@ -172,8 +173,10 @@ namespace TestTOS
                     {
                         continue;
                     }
+
                     testBucket.Add(b.Name);
                 }
+
                 Assert.AreEqual(1, testBucket.Count);
                 Assert.AreEqual(bucket, testBucket[0]);
             }
@@ -186,6 +189,5 @@ namespace TestTOS
                 client.DeleteBucket(deleteBucketInput);
             }
         }
-        
     }
 }
