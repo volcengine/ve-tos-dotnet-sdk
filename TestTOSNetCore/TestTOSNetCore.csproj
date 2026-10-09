@@ -73,6 +73,39 @@
         <Compile Include="..\TestTOS\Util.cs">
             <Link>Util.cs</Link>
         </Compile>
+        <Compile Include="..\TestTOS\LifecycleTestSupport.cs">
+            <Link>LifecycleTestSupport.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestBucketAccessMonitor.cs">
+            <Link>TestBucketAccessMonitor.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestBucketLifecycle.cs">
+            <Link>TestBucketLifecycle.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestBucketVersioning.cs">
+            <Link>TestBucketVersioning.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestCopyResponseParse.cs">
+            <Link>TestCopyResponseParse.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestLifecycleResponseErrors.cs">
+            <Link>TestLifecycleResponseErrors.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestObjectExpires.cs">
+            <Link>TestObjectExpires.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestObjectLifecycleMetadata.cs">
+            <Link>TestObjectLifecycleMetadata.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestObjectSetLifecycle.cs">
+            <Link>TestObjectSetLifecycle.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestObjectSetLifecycleByTag.cs">
+            <Link>TestObjectSetLifecycleByTag.cs</Link>
+        </Compile>
+        <Compile Include="..\TestTOS\TestObjectSetManagement.cs">
+            <Link>TestObjectSetManagement.cs</Link>
+        </Compile>
     </ItemGroup>
 
 

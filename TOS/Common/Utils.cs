@@ -229,7 +229,15 @@ namespace TOS.Common
             byte[] b = ReadAll(src);
             if (b == null || b.Length == 0) return null;
 
-            return JObject.Parse(Encoding.UTF8.GetString(b));
+            try
+            {
+                return JObject.Parse(Encoding.UTF8.GetString(b));
+            }
+            catch (JsonException)
+            {
+                // An invalid error body must not hide the HTTP status and request ID.
+                return null;
+            }
         }
 
         internal static JObject ParseJson(Stream src)

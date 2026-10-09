@@ -113,6 +113,10 @@ namespace TOS.Model
 
         public DateTime? Expires { internal set; get; }
 
+        public string Expiration { internal set; get; }
+
+        public RestoreInfo RestoreInfo { internal set; get; }
+
         internal override void Parse(HttpRequest request, HttpResponse response)
         {
             string temp;
@@ -180,6 +184,10 @@ namespace TOS.Model
 
             response.Header.TryGetValue(Constants.HeaderExpires, out temp);
             Expires = Utils.ParseDateTime(temp, Constants.Rfc1123DateFormat);
+
+            response.Header.TryGetValue(Constants.HeaderExpiration, out temp);
+            Expiration = temp;
+            RestoreInfo = RestoreHeaderParser.Parse(response.Header);
         }
     }
 }

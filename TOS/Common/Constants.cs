@@ -21,7 +21,7 @@ namespace TOS.Common
     internal class Constants
     {
         // http client
-        internal const string Version = "v2.1.8";
+        internal const string Version = "v2.1.9";
         internal const int DefaultConnectionTimeout = 10000;
         internal const int DefaultSocketTimeout = 30000;
         internal const int DefaultMaxConnections = 1024;
@@ -52,6 +52,7 @@ namespace TOS.Common
         internal const string SchemaHttps = "https://";
         internal const string AlgorithmAes256 = "AES256";
         internal const string True = "true";
+        internal const string False = "false";
 
         // header key
         internal const string HeaderPrefix = "x-tos-";
@@ -127,6 +128,13 @@ namespace TOS.Common
         internal const string HeaderCopySource = HeaderPrefix + "copy-source";
         internal const string HeaderCopySourceRange = HeaderPrefix + "copy-source-range";
         internal const string HeaderMetadataDirective = HeaderPrefix + "metadata-directive";
+        internal const string HeaderAllowSameActionOverlap = HeaderPrefix + "allow-same-action-overlap";
+        internal const string HeaderExpiration = HeaderPrefix + "expiration";
+        internal const string HeaderObjectExpires = HeaderPrefix + "object-expires";
+        internal const string HeaderRestore = HeaderPrefix + "restore";
+        internal const string HeaderRestoreRequestDate = HeaderPrefix + "restore-request-date";
+        internal const string HeaderRestoreExpiryDays = HeaderPrefix + "restore-expiry-days";
+        internal const string HeaderRestoreTier = HeaderPrefix + "restore-tier";
 
         // query key
         internal const string QueryVersionID = "versionId";
@@ -157,6 +165,18 @@ namespace TOS.Common
         internal const string QuerySecurityToken = "X-Tos-Security-Token";
         internal const string QuerySignature = "X-Tos-Signature";
         internal const string QueryTagging = "tagging";
+        internal const string QueryLifecycle = "lifecycle";
+        internal const string QueryAccessMonitor = "accessmonitor";
+        internal const string QueryObjectExpires = "objectExpires";
+        internal const string QueryObjectSetLifecycle = "objectset-lifecycle";
+        internal const string QueryObjectSetLifecycleByTag = "objectset-lifecycle-bytag";
+        internal const string QueryObjectSetName = "ObjectSetName";
+        internal const string QueryObjectSetConfiguration = "objectsetconfiguration";
+        internal const string QueryObjectSet = "objectset";
+        internal const string QueryObjectSets = "objectsets";
+        internal const string QueryObjectSetTagging = "objectsettagging";
+        internal const string QueryTags = "tags";
+        internal const string QueryVersioning = "versioning";
 
         internal static readonly CultureInfo DefaultCultureInfo = CultureInfo.GetCultureInfo("en-US");
 

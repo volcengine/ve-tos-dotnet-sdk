@@ -66,6 +66,17 @@
         <Compile Include="TestSetObjectMeta.cs"/>
         <Compile Include="TestUploadFile.cs"/>
         <Compile Include="Util.cs"/>
+        <Compile Include="LifecycleTestSupport.cs"/>
+        <Compile Include="TestBucketAccessMonitor.cs"/>
+        <Compile Include="TestBucketLifecycle.cs"/>
+        <Compile Include="TestBucketVersioning.cs"/>
+        <Compile Include="TestCopyResponseParse.cs"/>
+        <Compile Include="TestLifecycleResponseErrors.cs"/>
+        <Compile Include="TestObjectExpires.cs"/>
+        <Compile Include="TestObjectLifecycleMetadata.cs"/>
+        <Compile Include="TestObjectSetLifecycle.cs"/>
+        <Compile Include="TestObjectSetLifecycleByTag.cs"/>
+        <Compile Include="TestObjectSetManagement.cs"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\TOS\TOS.csproj">

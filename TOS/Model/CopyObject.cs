@@ -52,6 +52,8 @@ namespace TOS.Model
 
         public DateTime? Expires { get; set; }
 
+        public long? ObjectExpires { get; set; }
+
         public string CopySourceIfMatch { get; set; }
 
         public DateTime? CopySourceIfModifiedSince { get; set; }
@@ -110,6 +112,7 @@ namespace TOS.Model
             Utils.SetAclHeader(request.Header, this);
             Utils.SetMetaHeader(request.Header, Meta);
             Utils.SetMiscHeader(request.Header, this);
+            ObjectExpirationUtils.SetHeader(request.Header, ObjectExpires);
             if (MetadataDirective.HasValue)
             {
                 request.Header[Constants.HeaderMetadataDirective] = Enums.TransEnum(MetadataDirective.Value);
@@ -146,9 +149,10 @@ namespace TOS.Model
         internal sealed override void Parse(HttpRequest request, HttpResponse response)
         {
             JObject json = Utils.ParseJson(response.Body);
-            if (json.ContainsKey("ETag"))
+            string etag = json["ETag"]?.Value<string>();
+            if (!string.IsNullOrEmpty(etag))
             {
-                ETag = json["ETag"]?.Value<string>();
+                ETag = etag;
                 LastModified = Utils.ParseJTokenDate(json["LastModified"], Constants.Iso8601DateFormat);
 
                 string temp;
@@ -166,7 +170,8 @@ namespace TOS.Model
                 return;
             }
 
-            throw new TosServerException(json["Message"]?.Value<string>(), base._requestInfo)
+            throw new TosServerException(json["Message"]?.Value<string>() ?? "missing ETag in copy object response",
+                base._requestInfo)
             {
                 Code = json["Code"]?.Value<string>(),
                 HostID = json["HostId"]?.Value<string>(),
