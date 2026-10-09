@@ -53,6 +53,8 @@ namespace TOS.Model
         public string ContentType { get; set; }
         public DateTime? Expires { get; set; }
 
+        public long? ObjectExpires { get; set; }
+
         public ACLType? ACL { set; get; }
 
         public string GrantFullControl { set; get; }
@@ -119,6 +121,7 @@ namespace TOS.Model
             Utils.SetSseHeader(request.Header, this);
             Utils.SetMetaHeader(request.Header, Meta);
             Utils.SetMiscHeader(request.Header, this);
+            ObjectExpirationUtils.SetHeader(request.Header, ObjectExpires);
 
             return request;
         }

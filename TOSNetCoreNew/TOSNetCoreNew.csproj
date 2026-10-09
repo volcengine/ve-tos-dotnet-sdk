@@ -7,7 +7,7 @@
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Volcengine.TOS.SDK.NetCore</PackageId>
-        <Version>2.1.8</Version>
+        <Version>2.1.9</Version>
         <Authors>volcengine</Authors>
         <Company>volcengine</Company>
         <Description>.Net SDK for Volcengine TOS</Description>
@@ -78,14 +78,59 @@
         <Compile Include="..\TOS\Error\TosServerException.cs">
             <Link>Error\TosServerException.cs</Link>
         </Compile>
+        <Compile Include="..\TOS\ITosObjectSetClient.cs">
+            <Link>ITosObjectSetClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosBucketVersioningClient.cs">
+            <Link>ITosBucketVersioningClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\BucketObjectSetConfiguration.cs">
+            <Link>Model\BucketObjectSetConfiguration.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\BucketVersioning.cs">
+            <Link>Model\BucketVersioning.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\ObjectSet.cs">
+            <Link>Model\ObjectSet.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\ObjectSetCommon.cs">
+            <Link>Model\ObjectSetCommon.cs</Link>
+        </Compile>
         <Compile Include="..\TOS\ITosClient.cs">
             <Link>ITosClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosObjectExpirationClient.cs">
+            <Link>ITosObjectExpirationClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\ObjectExpires.cs">
+            <Link>Model\ObjectExpires.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosAccessMonitorClient.cs">
+            <Link>ITosAccessMonitorClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\BucketAccessMonitor.cs">
+            <Link>Model\BucketAccessMonitor.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\RestoreInfo.cs">
+            <Link>Model\RestoreInfo.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosLifecycleClient.cs">
+            <Link>ITosLifecycleClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosObjectSetLifecycleClient.cs">
+            <Link>ITosObjectSetLifecycleClient.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\ITosObjectSetLifecycleByTagClient.cs">
+            <Link>ITosObjectSetLifecycleByTagClient.cs</Link>
         </Compile>
         <Compile Include="..\TOS\Model\AbortMultipartUpload.cs">
             <Link>Model\AbortMultipartUpload.cs</Link>
         </Compile>
         <Compile Include="..\TOS\Model\AppendObject.cs">
             <Link>Model\AppendObject.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\BucketLifecycle.cs">
+            <Link>Model\BucketLifecycle.cs</Link>
         </Compile>
         <Compile Include="..\TOS\Model\Common.cs">
             <Link>Model\Common.cs</Link>
@@ -144,6 +189,15 @@
         <Compile Include="..\TOS\Model\ListParts.cs">
             <Link>Model\ListParts.cs</Link>
         </Compile>
+        <Compile Include="..\TOS\Model\LifecycleCommon.cs">
+            <Link>Model\LifecycleCommon.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\ObjectSetLifecycle.cs">
+            <Link>Model\ObjectSetLifecycle.cs</Link>
+        </Compile>
+        <Compile Include="..\TOS\Model\ObjectSetLifecycleByTag.cs">
+            <Link>Model\ObjectSetLifecycleByTag.cs</Link>
+        </Compile>
         <Compile Include="..\TOS\Model\PreSignedURL.cs">
             <Link>Model\PreSignedURL.cs</Link>
         </Compile>
@@ -189,6 +243,9 @@
         <Compile Include="..\TOS\TosClient.buckets.cs">
             <Link>TosClient.buckets.cs</Link>
         </Compile>
+        <Compile Include="..\TOS\TosClient.objectsets.cs">
+            <Link>TosClient.objectsets.cs</Link>
+        </Compile>
         <Compile Include="..\TOS\TosClient.multipart.cs">
             <Link>TosClient.multipart.cs</Link>
         </Compile>
@@ -205,7 +262,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
-            <PrivateAssets>build</PrivateAssets>
+            <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>

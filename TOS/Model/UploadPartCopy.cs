@@ -136,10 +136,11 @@ namespace TOS.Model
         internal sealed override void Parse(HttpRequest request, HttpResponse response)
         {
             JObject json = Utils.ParseJson(response.Body);
-            if (json.ContainsKey("ETag"))
+            string etag = json["ETag"]?.Value<string>();
+            if (!string.IsNullOrEmpty(etag))
             {
                 PartNumber = Convert.ToInt32(request.Query[Constants.QueryPartNumber]);
-                ETag = json["ETag"]?.Value<string>();
+                ETag = etag;
                 LastModified = Utils.ParseJTokenDate(json["LastModified"], Constants.Iso8601DateFormat);
                 string temp;
                 response.Header.TryGetValue(Constants.HeaderSSECAlgorithm, out temp);
@@ -150,7 +151,8 @@ namespace TOS.Model
                 return;
             }
 
-            throw new TosServerException(json["Message"]?.Value<string>(), base._requestInfo)
+            throw new TosServerException(json["Message"]?.Value<string>() ?? "missing ETag in upload part copy response",
+                base._requestInfo)
             {
                 Code = json["Code"]?.Value<string>(),
                 HostID = json["HostId"]?.Value<string>(),

@@ -6,7 +6,7 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{891F56D9-F7A2-4B70-BF3F-6214F2A121B0}</ProjectGuid>
         <OutputType>Library</OutputType>
-        <Version>2.1.8</Version>
+        <Version>2.1.9</Version>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>TOS</RootNamespace>
         <AssemblyName>Volcengine.TOS</AssemblyName>
@@ -62,9 +62,24 @@
         <Compile Include="Error\TosClientException.cs"/>
         <Compile Include="Error\TosException.cs"/>
         <Compile Include="Error\TosServerException.cs"/>
+        <Compile Include="ITosObjectSetClient.cs"/>
+        <Compile Include="ITosBucketVersioningClient.cs"/>
+        <Compile Include="Model\BucketObjectSetConfiguration.cs"/>
+        <Compile Include="Model\BucketVersioning.cs"/>
+        <Compile Include="Model\ObjectSet.cs"/>
+        <Compile Include="Model\ObjectSetCommon.cs"/>
         <Compile Include="ITosClient.cs"/>
+        <Compile Include="ITosObjectExpirationClient.cs"/>
+        <Compile Include="Model\ObjectExpires.cs"/>
+        <Compile Include="ITosAccessMonitorClient.cs"/>
+        <Compile Include="Model\BucketAccessMonitor.cs"/>
+        <Compile Include="Model\RestoreInfo.cs"/>
+        <Compile Include="ITosLifecycleClient.cs"/>
+        <Compile Include="ITosObjectSetLifecycleClient.cs"/>
+        <Compile Include="ITosObjectSetLifecycleByTagClient.cs"/>
         <Compile Include="Model\AbortMultipartUpload.cs"/>
         <Compile Include="Model\AppendObject.cs"/>
+        <Compile Include="Model\BucketLifecycle.cs"/>
         <Compile Include="Model\Common.cs"/>
         <Compile Include="Model\CompleteMultipartUpload.cs"/>
         <Compile Include="Model\CopyObject.cs"/>
@@ -86,6 +101,9 @@
         <Compile Include="Model\ListObjects.cs"/>
         <Compile Include="Model\ListObjectVersions.cs"/>
         <Compile Include="Model\ListParts.cs"/>
+        <Compile Include="Model\LifecycleCommon.cs"/>
+        <Compile Include="Model\ObjectSetLifecycle.cs"/>
+        <Compile Include="Model\ObjectSetLifecycleByTag.cs"/>
         <Compile Include="Model\PreSignedURL.cs"/>
         <Compile Include="Model\PutObject.cs"/>
         <Compile Include="Model\PutObjectTagging.cs"/>
@@ -100,6 +118,7 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="TosClient.basic.cs"/>
         <Compile Include="TosClient.buckets.cs"/>
+        <Compile Include="TosClient.objectsets.cs"/>
         <Compile Include="TosClient.multipart.cs"/>
         <Compile Include="TosClient.objects.cs"/>
         <Compile Include="TosClient.presign.cs"/>

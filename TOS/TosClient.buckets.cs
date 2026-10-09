@@ -20,6 +20,16 @@ namespace TOS
 {
     internal partial class TosClient
     {
+        public PutBucketVersioningOutput PutBucketVersioning(PutBucketVersioningInput input)
+        {
+            return this.DoRequest<PutBucketVersioningInput, PutBucketVersioningOutput>(input);
+        }
+
+        public GetBucketVersioningOutput GetBucketVersioning(GetBucketVersioningInput input)
+        {
+            return this.DoRequest<GetBucketVersioningInput, GetBucketVersioningOutput>(input);
+        }
+
         public CreateBucketOutput CreateBucket(CreateBucketInput input)
         {
             return this.DoRequest<CreateBucketInput, CreateBucketOutput>(input);
@@ -48,6 +58,31 @@ namespace TOS
             }
 
             return this.DoRequest<ListBucketsInput, ListBucketsOutput>(input);
+        }
+
+        public PutBucketLifecycleOutput PutBucketLifecycle(PutBucketLifecycleInput input)
+        {
+            return this.DoRequest<PutBucketLifecycleInput, PutBucketLifecycleOutput>(input);
+        }
+
+        public GetBucketLifecycleOutput GetBucketLifecycle(GetBucketLifecycleInput input)
+        {
+            return this.DoRequest<GetBucketLifecycleInput, GetBucketLifecycleOutput>(input);
+        }
+
+        public DeleteBucketLifecycleOutput DeleteBucketLifecycle(DeleteBucketLifecycleInput input)
+        {
+            return this.DoRequest<DeleteBucketLifecycleInput, DeleteBucketLifecycleOutput>(input);
+        }
+
+        public PutBucketAccessMonitorOutput PutBucketAccessMonitor(PutBucketAccessMonitorInput input)
+        {
+            return this.DoRequest<PutBucketAccessMonitorInput, PutBucketAccessMonitorOutput>(input);
+        }
+
+        public GetBucketAccessMonitorOutput GetBucketAccessMonitor(GetBucketAccessMonitorInput input)
+        {
+            return this.DoRequest<GetBucketAccessMonitorInput, GetBucketAccessMonitorOutput>(input);
         }
     }
 }

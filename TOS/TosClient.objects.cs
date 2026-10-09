@@ -75,6 +75,11 @@ namespace TOS
             return this.DoRequest<PutObjectInput, PutObjectOutput>(input);
         }
         
+        public SetObjectExpiresOutput SetObjectExpires(SetObjectExpiresInput input)
+        {
+            return this.DoRequest<SetObjectExpiresInput, SetObjectExpiresOutput>(input);
+        }
+
         public RestoreObjectOutput RestoreObject(RestoreObjectInput input)
         {
             return this.DoRequest<RestoreObjectInput, RestoreObjectOutput>(input);

@@ -112,6 +112,36 @@ namespace TOS
 
         public ITosClient Build()
         {
+            return this.BuildClient();
+        }
+
+        public ITosClientV2 BuildV2()
+        {
+            return this.BuildClient();
+        }
+
+        public ITosAccessMonitorClient BuildAccessMonitor()
+        {
+            return this.BuildClient();
+        }
+
+        public ITosObjectExpirationClient BuildObjectExpiration()
+        {
+            return this.BuildClient();
+        }
+
+        public ITosObjectSetClient BuildObjectSet()
+        {
+            return this.BuildClient();
+        }
+
+        public ITosBucketVersioningClient BuildBucketVersioning()
+        {
+            return this.BuildClient();
+        }
+
+        private TosClient BuildClient()
+        {
             this._configHolder.Credential = new Credential(this._ak, this._sk, this._securityToken);
             this._configHolder.RegionEndpoint = new RegionEndpoint(this._region, this._endpoint);
             return new TosClient(this._configHolder);

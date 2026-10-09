@@ -66,6 +66,20 @@ namespace TOS.Model
         [StringValue("DEEP_COLD_ARCHIVE")] StorageClassDeepColdArchive,
     }
 
+    public enum StatusType
+    {
+        [StringValue("Enabled")] StatusEnabled,
+
+        [StringValue("Disabled")] StatusDisabled
+    }
+
+    public enum VersioningStatusType
+    {
+        [StringValue("Enabled")] VersioningStatusEnabled,
+
+        [StringValue("Suspended")] VersioningStatusSuspended
+    }
+
     public enum AzRedundancyType
     {
         [StringValue("single-az")] AzRedundancySingleAz,
@@ -144,7 +158,8 @@ namespace TOS.Model
             {
                 typeof(HttpMethodType), typeof(ACLType), typeof(StorageClassType),
                 typeof(AzRedundancyType), typeof(MetadataDirectiveType), typeof(PermissionType),
-                typeof(GranteeType), typeof(CannedType), typeof(TaggingDirectiveType)
+                typeof(GranteeType), typeof(CannedType), typeof(TaggingDirectiveType), typeof(StatusType),
+                typeof(TierType), typeof(VersioningStatusType)
             };
 
             string ret;

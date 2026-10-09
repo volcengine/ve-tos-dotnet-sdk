@@ -25,7 +25,8 @@ using TOS.Model;
 
 namespace TOS
 {
-    internal partial class TosClient : ITosClient
+    internal partial class TosClient : ITosClientV2, ITosAccessMonitorClient, ITosObjectExpirationClient,
+        ITosObjectSetClient, ITosBucketVersioningClient
     {
         public const string Version = Constants.Version;
 
